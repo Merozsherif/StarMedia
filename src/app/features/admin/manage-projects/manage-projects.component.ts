@@ -395,7 +395,6 @@ export class ManageProjectsComponent implements OnInit {
         formData.append('DeletedGalleryImages', id.toString());
       });
     }
-
     this.isLoading.set(true);
     const editing = this.isEditMode();
     const toastId = this.toast.loading(

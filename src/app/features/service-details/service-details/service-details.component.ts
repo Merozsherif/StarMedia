@@ -156,7 +156,7 @@ export class ServiceDetailsComponent implements OnInit {
       title_ar: 'الطباعة الداخلية والخارجية',
       subtitle_en: 'Wide-format UV, eco-solvent and premium finishing.',
       subtitle_ar: 'طباعة كبيرة الحجم وتقنيات UV وإيكو-سولفنت مع تقفيل صناعي متكامل.',
-      hero_img: 'assets/project-printing.jpg',
+      hero_img: 'assets/indoor.png',
       overview_en: 'Using high-speed European and Japanese wide-format UV flatbed and roll-to-roll printers, Star Media produces vibrant prints with 1440 DPI accuracy on banner, flex, vinyl, backlights, and rigid materials.',
       overview_ar: 'باستخدام أحدث ماكينات الطباعة اليابانية والأوروبية بأسلوب UV وEco-Solvent، نضمن لك طباعة حادة التفاصيل على الفليكس، البنرات، الاستيكرات، وأكريليك بـ مطابقة تامة لألوان الهوية البصرية.',
       specs: [
@@ -176,7 +176,7 @@ export class ServiceDetailsComponent implements OnInit {
       title_ar: 'ستاندات مخصصة',
       subtitle_en: 'Bespoke display stands tailored to your brand and space.',
       subtitle_ar: 'ستاندات عرض مصممة خصيصًا لهويتك ومساحتك.',
-      hero_img: 'assets/project-booth-1.jpg',
+      hero_img: 'assets/stand.png',
       overview_en: 'We design and fabricate bespoke standalone display stands for retail, corporate lobbies, and promotional campaigns — combining structural durability with brand-accurate finishing.',
       overview_ar: 'نصمم وننفذ ستاندات عرض مستقلة مخصصة للمتاجر، لوبيهات الشركات، والحملات الترويجية — بمتانة إنشائية ودقة تنفيذ تطابق هويتك البصرية.',
       specs: [
@@ -196,7 +196,7 @@ export class ServiceDetailsComponent implements OnInit {
       title_ar: 'الهدايا الترويجية',
       subtitle_en: 'Branded merchandise and promotional items at scale.',
       subtitle_ar: 'منتجات ترويجية مطبوعة بهويتك بأي كمية.',
-      hero_img: 'assets/project-printing.jpg',
+      hero_img: 'assets/Giveaways.png',
       overview_en: 'From corporate gifting to mass-scale event giveaways, we produce branded merchandise with consistent quality and fast turnaround — pens, apparel, drinkware, and custom promotional items.',
       overview_ar: 'من الهدايا المؤسسية للشركات إلى هدايا الفعاليات بكميات كبيرة، ننتج منتجات ترويجية بهويتك بجودة ثابتة وسرعة تسليم — أقلام، ملابس، أكواب، ومنتجات ترويجية مخصصة.',
       specs: [

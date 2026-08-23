@@ -35,13 +35,13 @@ export class ServicesComponent {
     { slug: 'branding-signage', categorySlug: 'signage', img: 'assets/project-signage.jpg', en: 'Branding & Signage', ar: 'الهوية واللافتات', desc_en: '3D letters, backlit facades, wayfinding systems.', desc_ar: 'حروف ثلاثية الأبعاد ولافتات مضاءة.' },
 
     // 06 / 08 - Printing (id: 6)
-    { slug: 'indoor-outdoor-printing', categorySlug: 'signage', img: 'assets/project-printing.jpg', en: 'Indoor & Outdoor Printing', ar: 'الطباعة الداخلية والخارجية', desc_en: 'Wide-format UV, eco-solvent and premium finishing.', desc_ar: 'طباعة يو في كبيرة ونوعية عالية.' },
+    { slug: 'indoor-outdoor-printing', categorySlug: 'signage', img: 'assets/indoor.png', en: 'Indoor & Outdoor Printing', ar: 'الطباعة الداخلية والخارجية', desc_en: 'Wide-format UV, eco-solvent and premium finishing.', desc_ar: 'طباعة يو في كبيرة ونوعية عالية.' },
 
     // 07 / 08 - Custom Stands (id: 7)
-    { slug: 'custom-stands', categorySlug: 'custom-stands', img: 'assets/project-custom-stand-1.jpg', en: 'Custom Stands', ar: 'ستاندات مخصصة', desc_en: 'Bespoke display stands tailored to your brand and space.', desc_ar: 'ستاندات عرض مصممة خصيصًا لهويتك ومساحتك.' },
+    { slug: 'custom-stands', categorySlug: 'custom-stands', img: "assets/stand.png", en: 'Custom Stands', ar: 'ستاندات مخصصة', desc_en: 'Bespoke display stands tailored to your brand and space.', desc_ar: 'ستاندات عرض مصممة خصيصًا لهويتك ومساحتك.' },
 
     // 08 / 08 - Giveaways (id: 8)
-    { slug: 'giveaways', categorySlug: 'giveaways', img: 'assets/project-giveaways-1.jpg', en: 'Giveaways', ar: 'الهدايا الترويجية', desc_en: 'Branded merchandise and promotional items at scale.', desc_ar: 'منتجات ترويجية مطبوعة بهويتك بأي كمية.' },
+    { slug: 'giveaways', categorySlug: 'giveaways',   img: "assets/Giveaways.png", en: 'Giveaways', ar: 'الهدايا الترويجية', desc_en: 'Branded merchandise and promotional items at scale.', desc_ar: 'منتجات ترويجية مطبوعة بهويتك بأي كمية.' },
   ];
 
   constructor(public site: AppService) {}

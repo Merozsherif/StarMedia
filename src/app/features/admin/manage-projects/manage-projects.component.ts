@@ -388,9 +388,11 @@ export class ManageProjectsComponent implements OnInit {
       });
     }
 
+    // ✅ مهم: الاسم لازم يطابق بالظبط property الباك اند (UpdateProjectRequest.DeletedGalleryImages)
+    // وإلا الـ Model Binding مش هيلاقي القيمة، والصور المحذوفة هترجع تاني بعد أي تعديل لاحق.
     if (this.imagesToDelete && this.imagesToDelete.length > 0) {
       this.imagesToDelete.forEach((id) => {
-        formData.append('deletedGalleryImageIds', id.toString());
+        formData.append('DeletedGalleryImages', id.toString());
       });
     }
 

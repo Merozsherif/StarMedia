@@ -1,0 +1,72 @@
+<div class="min-h-screen flex items-center justify-center bg-[#0a0c0f] text-slate-100 p-4 font-sans relative"
+     [attr.dir]="site.currentLang() === 'ar' ? 'rtl' : 'ltr'">
+
+  <!-- Subtle Dark Grid Overlay -->
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#1f293712_1px,transparent_1px),linear-gradient(to_bottom,#1f293712_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] pointer-events-none"></div>
+
+  <div class="relative w-full max-w-md bg-[#12151a] p-8 rounded-2xl shadow-2xl border border-slate-800/80 backdrop-blur-xl">
+
+    <!-- Language Switcher Bar -->
+    <div class="flex justify-end mb-2">
+      <button type="button" (click)="site.toggleLanguage()"
+              class="text-xs font-bold px-3 py-1.5 rounded-lg bg-[#0a0c0f] border border-slate-800 text-slate-300 hover:text-[#22c55e] hover:border-[#22c55e]/50 transition duration-200 flex items-center gap-1.5 cursor-pointer">
+        <span>🌐</span>
+        <span>{{ site.currentLang() === 'ar' ? 'English' : 'عربي' }}</span>
+      </button>
+    </div>
+
+    <!-- Star Media Branding Logo -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center mb-4">
+        <img src="assets/whitegreen.png" alt="Star Media Logo" class="h-14 w-auto object-contain" />
+      </div>
+      <h2 class="text-xl font-bold tracking-tight text-white mb-1">
+        {{ site.t('Admin Control Panel', 'لوحة تحكم الأدمن') }}
+      </h2>
+      <p class="text-xs text-slate-400">
+        {{ site.t('Content & Project Management', 'إدارة المحتوى والمشاريع') }}
+      </p>
+    </div>
+
+    <!-- Form Container -->
+    <form (ngSubmit)="onLogin()" class="space-y-5">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+          {{ site.t('Email Address', 'البريد الإلكتروني') }}
+        </label>
+        <input type="email" [(ngModel)]="loginData.email" name="email" required placeholder="admin@starmedia.com"
+               class="w-full px-4 py-3 rounded-xl bg-[#0a0c0f] border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e] transition text-sm" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+          {{ site.t('Password', 'كلمة المرور') }}
+        </label>
+
+        <div class="relative">
+          <input [type]="showPassword ? 'text' : 'password'"
+                 [(ngModel)]="loginData.passwordHash" name="passwordHash" required placeholder="••••••••"
+                 class="w-full px-4 py-3 rounded-xl bg-[#0a0c0f] border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e] transition text-sm ltr:pr-10 rtl:pl-10" />
+
+          <button type="button" (click)="togglePassword()"
+                  class="absolute top-1/2 -translate-y-1/2 ltr:right-3 rtl:left-3 text-slate-400 hover:text-[#22c55e] text-xs font-medium cursor-pointer transition">
+            {{ showPassword ? site.t('Hide', 'إخفاء') : site.t('Show', 'إظهار') }}
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="loading"
+              class="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-black bg-[#22c55e] hover:bg-[#16a34a] active:scale-[0.99] transition duration-200 shadow-lg shadow-[#22c55e]/15 disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ loading ? site.t('Authenticating...', 'جاري التحقق...') : site.t('Sign In', 'تسجيل الدخول') }}
+      </button>
+    </form>
+
+    <div class="mt-8 pt-6 border-t border-slate-800/60 text-center">
+      <span class="text-[11px] text-slate-500 uppercase tracking-widest">Star Media Production House © 2026</span>
+    </div>
+  </div>
+</div>

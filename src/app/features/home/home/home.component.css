@@ -1,0 +1,82 @@
+/* تكبير مقاسات كارت اللوجو والشريط */
+.marquee-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110px;        /* ارتفاع الكارت */
+  min-width: 220px;     /* عرض الكارت عشان يشيل اللوجو الكبير براحته */
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(20, 20, 20, 0.7);
+  padding: 1.25rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.marquee-card:hover {
+  border-color: rgba(34, 197, 94, 0.5);
+  background-color: rgba(30, 30, 30, 0.95);
+  transform: scale(1.05);
+}
+
+/* تكبير مقاسات الصورة للضعف تقريباً لتظهر واضحة جداً */
+.marquee-logo-img {
+  max-height: 130px;   /* الارتفاع الأقصى للوجو (مكبر بوضوح) */
+  min-height: 100px;   /* الارتفاع الأدنى عشان حتى الصغير يبان كبير */
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* أبعاد الحركة للاتجاهين */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 40s linear infinite;
+}
+
+.animate-marquee:hover,
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+/* Mobile: تصغير الكارت واللوجو */
+@media (max-width: 767px) {
+  .marquee-card {
+    height: 70px;
+    min-width: 130px;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+  }
+
+  .marquee-logo-img {
+    max-height: 75px;
+    min-height: 0;
+  }
+}
+section a[routerLink="/about"]::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,297 @@
+<section class="relative overflow-hidden border-b border-zinc-200 bg-zinc-900 pb-24 pt-36 text-white transition-colors duration-300 dark:border-white/10 md:pb-32 md:pt-48">
+
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src="assets/Newfolder/contact.jpeg"
+      alt="Contact Background"
+      class="h-full w-full object-cover object-center opacity-30"
+    />
+
+    <div class="absolute inset-0 bg-gradient-to-r
+      from-black/90
+      via-black/20
+      to-black/10">
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container-x relative z-10">
+
+    <div class="mb-6 flex items-center gap-3">
+      <span class="h-0.5 w-8 bg-brand"></span>
+      <span class="font-mono text-xs font-semibold uppercase tracking-widest text-brand">
+        {{ site.t('Contact Us', 'تواصل معنا') }}
+      </span>
+    </div>
+
+    <h1 class="max-w-5xl text-4xl font-bold leading-tight text-white md:text-7xl lg:text-8xl">
+      {{ site.t('Let’s Build Something', 'لنبدأ') }}
+      <br>
+      <span class="italic font-light text-zinc-300">
+        {{ site.t('Amazing Together', 'مشروعك القادم') }}
+      </span>
+      <span class="text-brand">
+        {{ site.t('.', '.') }}
+      </span>
+    </h1>
+
+    <p class="mt-8 max-w-3xl text-base leading-relaxed text-zinc-300 md:text-xl">
+      {{
+      site.t(
+      'Have a project in mind? Whether you need exhibition booths, branding, printing, production, or complete event execution, our team is ready to bring your vision to life.',
+      'هل لديك مشروع جديد؟ سواء كنت تحتاج إلى تصميم وتنفيذ أجنحة المعارض، الهوية البصرية، الطباعة، الإنتاج أو تنظيم الفعاليات، فريق Star Media جاهز لتحويل فكرتك إلى واقع.'
+      )
+      }}
+    </p>
+
+  </div>
+
+</section>
+
+<!-- Main Contact & Form Section -->
+<section class="bg-white py-20 transition-colors duration-300 dark:bg-zinc-950 md:py-32">
+  <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-stretch">
+
+    <!-- Contact Information & Map Side (Left) -->
+<div class="order-2 lg:order-1 lg:col-span-5 flex flex-col justify-between space-y-8">
+
+      <!-- Office Info Card -->
+      <div class="rounded-xl border border-zinc-200 bg-zinc-50 p-6 shadow-sm transition-colors dark:border-white/10 dark:bg-zinc-900/60 md:p-8 space-y-6">
+        <div class="text-eyebrow flex items-center gap-2">
+          <span class="h-0.5 w-6 bg-brand"></span>
+          <span class="font-mono text-xs font-semibold uppercase tracking-widest text-brand">
+            {{ site.t('Head Office & Social', 'المقر الرئيسي ووسائل التواصل') }}
+          </span>
+        </div>
+
+        <div class="space-y-5 text-sm md:text-base text-zinc-700 dark:text-zinc-300">
+
+          <!-- Address -->
+          <div class="flex items-start gap-4">
+            <div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+              <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <path d="M12 0C7.802 0 4 3.403 4 7.602c0 4.198 3.802 9.398 8 14.398 4.198-5 8-10.2 8-14.398C20 3.403 16.198 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-white">{{ site.t('Location', 'العنوان') }}</p>
+              <p class="mt-0.5 text-xs md:text-sm text-zinc-600 dark:text-zinc-400">
+                5 Abd El-Moneim Fawzi St., New Nozha, Cairo, Egypt
+              </p>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="flex items-start gap-4">
+            <div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+              <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-white">{{ site.t('Email Us', 'البريد الإلكتروني') }}</p>
+              <a href="mailto:info@starmedia-eg.com" class="mt-0.5 block text-xs md:text-sm text-zinc-600 dark:text-zinc-400 transition-colors hover:text-brand">
+                info&#64;starmedia-eg.com
+              </a>
+            </div>
+          </div>
+
+          <!-- Phone Numbers -->
+          <div class="flex items-start gap-4">
+            <div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+              <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-zinc-900 dark:text-white">{{ site.t('Phone & WhatsApp', 'أرقام الهاتف والتواصل') }}</p>
+              <div class="mt-1 grid grid-cols-1 gap-x-4 gap-y-1 text-xs md:text-sm text-zinc-600 dark:text-zinc-400 sm:grid-cols-2">
+                <a href="tel:+201229970969" class="transition-colors hover:text-brand">+20 122 9970 969</a>
+                <a href="tel:+201226094687" class="transition-colors hover:text-brand">+20 122 6094 687</a>
+                <a href="tel:+201277888480" class="transition-colors hover:text-brand">+20 127 7888 480</a>
+                <a href="tel:0221808835" class="transition-colors hover:text-brand">02 2180 8835</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Social Media Links with Verified Green Hover -->
+        <div class="border-t border-zinc-200 pt-6 dark:border-white/10">
+          <p class="mb-3 font-semibold text-xs uppercase tracking-widest text-zinc-900 dark:text-white">
+            {{ site.t('Follow Us', 'تابعنا على منصات التواصل') }}
+          </p>
+          <div class="flex items-center gap-3">
+            <!-- Facebook -->
+            <a
+              href="https://www.facebook.com/people/Star-Media/61590749580151/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              class="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 shadow-sm transition-all duration-300 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 hover:border-brand hover:bg-brand hover:text-zinc-950">
+              <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a
+              href="https://www.instagram.com/starmedia.productionhouse/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              class="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 shadow-sm transition-all duration-300 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300 hover:border-brand hover:bg-brand hover:text-zinc-950">
+              <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Map Frame -->
+      <div class="relative flex-1 min-h-[280px] overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 shadow-md transition-colors dark:border-white/10 dark:bg-zinc-900">
+        <iframe
+          title="Star Media location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3450.964838557323!2d31.364018875064325!3d30.12381961480643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145816881c0dbe0d%3A0xe4d802472a86608b!2s5%20Abd%20El-Moneim%20Fawzi%2C%20Huckstep%2C%20El%20Nozha%2C%20Cairo%20Governorate%204473141!5e0!3m2!1sen!2seg!4v1785458631442!5m2!1sen!2seg"
+          class="h-full w-full border-0"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Contact Form Side (Right - Optimized Layout) -->
+<div class="order-1 lg:order-2 lg:col-span-7 flex">
+      <form (ngSubmit)="submit()" class="w-full flex flex-col justify-between rounded-xl border border-zinc-200 bg-zinc-50 p-8 shadow-md backdrop-blur-md transition-colors dark:border-white/10 dark:bg-zinc-900/80 md:p-12">
+
+        <ng-container *ngIf="sent; else formFields">
+          <div class="grid place-items-center gap-4 py-20 text-center my-auto">
+            <div class="flex h-16 w-16 items-center justify-center rounded-full border border-brand/40 bg-brand/20 text-3xl font-bold text-brand">
+              ✓
+            </div>
+            <h3 class="text-display text-2xl font-bold text-zinc-900 dark:text-white md:text-3xl">
+              {{ site.t('Message Sent Successfully!', 'تم إرسال رسالتك بنجاح!') }}
+            </h3>
+            <p class="max-w-md text-zinc-600 dark:text-zinc-400">
+              {{ site.t(
+              'Our team will contact you as soon as possible.',
+              'سيقوم فريق Star Media بالتواصل معك في أقرب وقت.'
+              ) }}
+            </p>
+          </div>
+        </ng-container>
+
+        <ng-template #formFields>
+          <div>
+            <div class="mb-8 border-b border-zinc-200 pb-6 dark:border-white/10">
+              <h2 class="text-display text-2xl font-bold text-zinc-900 dark:text-white md:text-3xl">
+                {{ site.t('Start Your Project', 'ابدأ مشروعك') }}
+              </h2>
+              <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400 md:text-sm">
+                {{ site.t('Fill in the details below and we will get back to you shortly.', 'أدخل البيانات وسيتم التواصل معك مباشرة.') }}
+              </p>
+            </div>
+
+            <!-- Restructured Form Layout: Name & Email side-by-side, Phone full width, Service full width, Textarea expanded -->
+            <div class="space-y-5">
+
+              <!-- Row 1: Full Name & Email Address -->
+              <div class="grid gap-5 md:grid-cols-2">
+                <div class="space-y-2">
+                  <label class="block font-mono text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    {{ site.t('Full Name', 'الاسم بالكامل') }}
+                  </label>
+                  <input
+                    name="name"
+                    [(ngModel)]="name"
+                    required
+                    placeholder="John Doe"
+                    class="h-12 w-full rounded-lg border border-zinc-300 bg-white px-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-brand dark:border-white/10 dark:bg-black/50 dark:text-white dark:placeholder-zinc-600" />
+                </div>
+
+                <div class="space-y-2">
+                  <label class="block font-mono text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    {{ site.t('Email Address', 'البريد الإلكتروني') }}
+                  </label>
+                  <input
+                    name="email"
+                    type="email"
+                    [(ngModel)]="email"
+                    required
+                    placeholder="name@company.com"
+                    class="h-12 w-full rounded-lg border border-zinc-300 bg-white px-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-brand dark:border-white/10 dark:bg-black/50 dark:text-white dark:placeholder-zinc-600" />
+                </div>
+              </div>
+
+              <!-- Row 2: Phone Number (Full Width) -->
+              <div class="space-y-2">
+                <label class="block font-mono text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  {{ site.t('Phone Number', 'رقم الهاتف') }}
+                </label>
+                <input
+                  name="phone"
+                  type="tel"
+                  [(ngModel)]="phone"
+                  placeholder="+20 123 456 7890"
+                  class="h-12 w-full rounded-lg border border-zinc-300 bg-white px-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-brand dark:border-white/10 dark:bg-black/50 dark:text-white dark:placeholder-zinc-600" />
+              </div>
+
+              <!-- Row 3: Required Service Select (Full Width) -->
+              <div class="space-y-2">
+                <label class="block font-mono text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  {{ site.t('Required Service', 'الخدمة المطلوبة') }}
+                </label>
+                <div class="relative">
+                  <select
+                    name="service"
+                    [(ngModel)]="service"
+                    class="h-12 w-full appearance-none rounded-lg border border-zinc-300 bg-white px-4 text-sm text-zinc-900 outline-none transition-colors focus:border-brand dark:border-white/10 dark:bg-black/50 dark:text-white [&>option]:bg-white [&>option]:text-zinc-900 dark:[&>option]:bg-zinc-900 dark:[&>option]:text-white">
+                    <option value="" disabled selected>
+                      {{ site.t('Choose Service', 'اختر الخدمة') }}
+                    </option>
+                    <option *ngFor="let s of services" [value]="s">
+                      {{ s }}
+                    </option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500 dark:text-zinc-400 rtl:left-0 rtl:right-auto">
+                    ▼
+                  </div>
+                </div>
+              </div>
+
+              <!-- Row 4: Project Details (Balanced height to fill space cleanly) -->
+              <div class="space-y-2">
+                <label class="block font-mono text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                  {{ site.t('Project Details', 'تفاصيل المشروع') }}
+                </label>
+                <textarea
+                  name="message"
+                  [(ngModel)]="message"
+                  rows="5"
+                  [placeholder]="site.t(
+                  'Tell us about your project requirements...',
+                  'اكتب تفاصيل مشروعك أو متطلباتك...'
+                  )"
+                  class="w-full rounded-lg border border-zinc-300 bg-white p-4 text-sm text-zinc-900 placeholder-zinc-400 outline-none transition-colors focus:border-brand dark:border-white/10 dark:bg-black/50 dark:text-white dark:placeholder-zinc-600">
+                </textarea>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="pt-6">
+            <button type="submit" class="btn-brand w-full md:w-auto">
+              {{ site.t('Send Request', 'إرسال الطلب') }}
+            </button>
+          </div>
+
+        </ng-template>
+
+      </form>
+    </div>
+
+  </div>
+</section>

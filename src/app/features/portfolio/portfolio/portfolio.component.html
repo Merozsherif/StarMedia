@@ -1,0 +1,264 @@
+<!-- Hero / Header Section with Background Image -->
+<section class="relative overflow-hidden border-b border-zinc-200 bg-zinc-900 pb-24 pt-36 text-white transition-colors duration-300 dark:border-white/10 md:pb-32 md:pt-48">
+
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+
+    <img
+      src="assets/Newfolder/home2.jpeg"
+      alt="Portfolio Background"
+      class="h-full w-full object-cover object-center opacity-35"
+    />
+
+    <div class="absolute inset-0 bg-gradient-to-r
+      from-black/90
+      via-black/20
+      to-black/10">
+    </div>
+
+  </div>
+
+  <div class="container-x relative z-10">
+
+    <div class="text-eyebrow mb-6 flex items-center gap-3">
+      <span class="h-0.5 w-8 bg-brand"></span>
+      <span class="font-mono text-xs uppercase tracking-widest text-brand">
+        {{ site.t('SELECTED WORK', 'أعمال مختارة') }}
+      </span>
+    </div>
+
+    <h1 class="text-display max-w-5xl text-5xl font-bold leading-tight text-white md:text-7xl lg:text-8xl">
+      {{ site.t('Portfolio', 'معرض الأعمال') }}
+      <span class="text-brand">.</span>
+    </h1>
+
+    <p class="mt-8 max-w-3xl text-base md:text-xl leading-relaxed text-zinc-300">
+      {{
+        site.t(
+          'Explore our collection of successful exhibition booths, branding identity, and complete production projects.',
+          'استكشف مجموعتنا من أجنحة المعارض، الهويات البصرية، ومشاريع الإنتاج المتكاملة.'
+        )
+      }}
+    </p>
+
+  </div>
+
+</section>
+
+<!-- شريط الفلترة والبحث -->
+<section class="sticky top-20 z-30 border-b border-border/60 bg-background/85 backdrop-blur-xl">
+  <div class="container-x flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
+
+    <!-- Desktop: Pills -->
+    <div class="hidden md:flex flex-wrap gap-2">
+      <button
+        *ngFor="let c of categories"
+        (click)="setCategory(c)"
+        class="rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest transition-all"
+        [ngClass]="selectedCategory.id === c.id ? 'border-brand bg-brand text-brand-foreground' : 'border-border/60 text-muted-foreground hover:border-brand hover:text-brand'"
+      >
+        {{ getCategoryDisplayName(c.id) }}
+      </button>
+    </div>
+
+    <!-- Mobile: Dropdown -->
+    <div class="relative md:hidden">
+      <button
+        (click)="filterOpen = !filterOpen"
+        class="flex w-full items-center justify-between gap-2 rounded-lg border border-border/60 bg-surface px-4 py-3 text-sm font-semibold text-foreground"
+      >
+        <span class="flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-brand"></span>
+          {{ getCategoryDisplayName(selectedCategory.id) }}
+        </span>
+        <span class="text-muted-foreground transition-transform duration-200" [ngClass]="filterOpen ? 'rotate-180' : ''">▼</span>
+      </button>
+
+      <div
+        *ngIf="filterOpen"
+        class="absolute inset-x-0 top-full z-40 mt-2 overflow-hidden rounded-lg border border-border/60 bg-surface shadow-lg"
+      >
+        <button
+          *ngFor="let c of categories"
+          (click)="setCategory(c); filterOpen = false"
+          class="flex w-full items-center gap-3 border-b border-border/30 px-4 py-3 text-start text-sm last:border-none transition-colors"
+          [ngClass]="selectedCategory.id === c.id ? 'bg-brand/10 text-brand font-semibold' : 'text-foreground/80 hover:bg-border/10'"
+        >
+          <span class="h-1.5 w-1.5 rounded-full" [ngClass]="selectedCategory.id === c.id ? 'bg-brand' : 'bg-transparent'"></span>
+          {{ getCategoryDisplayName(c.id) }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Search: rectangular, tinted bg, with icon -->
+    <label class="relative flex items-center">
+      <svg
+        class="pointer-events-none absolute start-3.5 h-4 w-4 text-brand"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+
+      <input
+        [(ngModel)]="query"
+        (ngModelChange)="onSearchChange()"
+        [placeholder]="site.t('Search projects…', 'ابحث…')"
+        class="w-full min-w-64 rounded-full border border-brand/30 bg-brand/10 py-2 pe-4 ps-10 text-sm outline-none transition-colors focus:border-brand focus:bg-brand/15"
+      />
+    </label>
+  </div>
+</section>
+
+<!-- الجريد -->
+<section class="py-16 md:py-24">
+  <div class="container-x">
+
+    <!-- Loading state -->
+    <div *ngIf="loading" class="py-24 text-center text-muted-foreground">
+      {{ site.t('Loading…', 'جارِ التحميل…') }}
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="!loading && error" class="py-24 text-center text-red-400">
+      {{ site.t('Something went wrong.', 'حدث خطأ ما.') }}
+    </div>
+
+    <div
+      *ngIf="!loading && !error"
+      class="
+        columns-1
+        gap-4
+        md:columns-2
+        lg:columns-3
+      "
+    >
+      <a
+        *ngFor="let p of projects"
+        [routerLink]="['/portfolio', p.id]"
+        class="
+          group
+          relative
+          mb-4
+          block
+          w-full
+          break-inside-avoid
+          overflow-hidden
+          bg-black
+        "
+      >
+
+        <!-- IMAGE -->
+        <div class="relative w-full">
+
+          <img
+            [src]="p.image"
+            [alt]="p.title"
+            loading="lazy"
+            class="
+              block
+              h-auto
+              w-full
+              max-w-full
+              object-contain
+              transition-transform
+              duration-[1200ms]
+              ease-out
+              group-hover:scale-[1.03]
+            "
+          />
+
+          <!-- Dark Gradient -->
+          <div
+            class="
+              pointer-events-none
+              absolute
+              inset-0
+              bg-gradient-to-t
+              from-black/90
+              via-black/20
+              to-transparent
+              opacity-100
+            "
+          ></div>
+
+          <!-- CONTENT -->
+          <div class="absolute inset-x-0 bottom-0 p-5 md:p-6">
+
+            <div
+              *ngIf="p.categoryId"
+              class="
+                mb-2
+                text-[10px]
+                font-semibold
+                uppercase
+                tracking-[0.25em]
+                text-brand
+              "
+            >
+              {{ getCategoryDisplayName(p.categoryId) }}
+            </div>
+
+            <h3
+              class="
+                text-xl
+                font-semibold
+                leading-tight
+                text-white
+                md:text-2xl
+              "
+            >
+              {{ p.title }}
+            </h3>
+
+            <div
+              class="
+                mt-2
+                text-xs
+                text-white/60
+              "
+            >
+              {{ p.client }}
+            </div>
+
+          </div>
+
+        </div>
+
+      </a>
+    </div>
+    <p *ngIf="!loading && !error && projects.length === 0" class="py-24 text-center text-muted-foreground">
+      {{ site.t('No projects found.', 'لا توجد نتائج.') }}
+    </p>
+
+    <!-- Pagination -->
+    <div *ngIf="!loading && !error && totalPages > 1" class="mt-16 flex items-center justify-center gap-2">
+      <button
+        (click)="prevPage()"
+        [disabled]="page === 1"
+        class="rounded-full border border-border/60 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground transition-all hover:border-brand hover:text-brand disabled:opacity-30 disabled:hover:border-border/60 disabled:hover:text-muted-foreground"
+      >
+        {{ site.t('Prev', 'السابق') }}
+      </button>
+
+      <button
+        *ngFor="let p of pagesArray"
+        (click)="goToPage(p)"
+        class="h-9 w-9 rounded-full border text-xs font-semibold transition-all"
+        [ngClass]="page === p ? 'border-brand bg-brand text-brand-foreground' : 'border-border/60 text-muted-foreground hover:border-brand hover:text-brand'"
+      >
+        {{ p }}
+      </button>
+
+      <button
+        (click)="nextPage()"
+        [disabled]="page === totalPages"
+        class="rounded-full border border-border/60 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground transition-all hover:border-brand hover:text-brand disabled:opacity-30 disabled:hover:border-border/60 disabled:hover:text-muted-foreground"
+      >
+        {{ site.t('Next', 'التالي') }}
+      </button>
+    </div>
+  </div>
+</section>

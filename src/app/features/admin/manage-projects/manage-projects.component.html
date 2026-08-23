@@ -1,0 +1,426 @@
+<div class="p-4 md:p-10 space-y-8 animate-fade-in text-zinc-100 max-w-7xl mx-auto">
+
+  <!-- ================= 1. عرض المشاريع (جدول للديسككتوب + كروت للموبايل) ================= -->
+  <div *ngIf="!isFormView()" class="space-y-6">
+
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="h-0.5 w-6 bg-brand"></span>
+          <span class="font-mono text-xs font-semibold uppercase tracking-widest text-brand">
+            {{ site.t('Dashboard / Projects', 'لوحة التحكم / المشاريع') }}
+          </span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold text-white">
+          {{ site.t('Manage Projects', 'إدارة المشاريع') }}
+        </h1>
+      </div>
+
+      <button (click)="openAddForm()" class="btn-brand self-start sm:self-auto px-5 py-2.5 rounded-xl text-xs font-mono font-bold shadow-lg flex items-center gap-2">
+        <span class="text-base leading-none">+</span> {{ site.t('Add New Project', 'إضافة مشروع جديد') }}
+      </button>
+    </div>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage()" class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+      {{ errorMessage() }}
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading()" class="flex flex-col items-center justify-center py-20 gap-3">
+      <div class="w-8 h-8 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
+      <p class="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+        {{ site.t('Loading records...', 'جاري التحميل...') }}
+      </p>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div *ngIf="!isLoading()">
+
+      <!-- 📱 عرض الموبايل (كروت عمودية) -->
+      <div class="grid grid-cols-1 gap-4 md:hidden">
+        <div *ngFor="let p of projects()" class="bg-zinc-900/90 border border-zinc-800/80 rounded-2xl p-4 space-y-4 shadow-xl backdrop-blur-sm">
+          <div class="flex items-center gap-3.5">
+            <img [src]="p.coverImage || 'assets/images/default-placeholder.png'"
+                 (error)="onImgError($event)"
+                 class="w-16 h-16 object-cover rounded-xl border border-zinc-800 shrink-0 shadow-md">
+            <div class="overflow-hidden flex-1">
+              <h3 class="font-semibold text-white text-base truncate">{{ getProjectTitle(p) }}</h3>
+              <p class="text-xs font-mono text-zinc-400 truncate mt-1 flex items-center gap-1">
+                <span class="text-zinc-600">Client:</span> {{ p.clientName || '-' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-3 border-t border-zinc-800/80">
+            <button (click)="openEditForm(p.id)" class="flex-1 py-2.5 rounded-xl border border-zinc-700 bg-zinc-800/50 text-zinc-200 hover:border-brand hover:text-brand transition-all text-xs font-mono text-center shadow-sm font-medium">
+              {{ site.t('Edit', 'تعديل') }}
+            </button>
+            <button (click)="deleteItem(p.id)" class="flex-1 py-2.5 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-mono text-center shadow-sm font-medium">
+              {{ site.t('Delete', 'حذف') }}
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="projects().length === 0" class="p-12 text-center text-zinc-500 font-mono text-xs bg-zinc-900/50 rounded-2xl border border-zinc-800">
+          {{ site.t('No projects found.', 'لا توجد مشاريع مسجلة.') }}
+        </div>
+      </div>
+
+      <!-- 💻 عرض الديسكتوب (جدول) -->
+      <div class="hidden md:block rounded-2xl border border-zinc-800 bg-zinc-900/80 shadow-2xl overflow-hidden backdrop-blur-md">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse rtl:text-right">
+            <thead>
+              <tr class="border-b border-zinc-800 font-mono text-xs uppercase tracking-wider text-zinc-400 bg-black/40">
+                <th class="p-4">{{ site.t('Preview', 'الصورة') }}</th>
+                <th class="p-4">{{ site.t('Project Title', 'عنوان المشروع') }}</th>
+                <th class="p-4">{{ site.t('Client Name', 'اسم العميل') }}</th>
+                <th class="p-4 text-center">{{ site.t('Actions', 'الإجراءات') }}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-800/60 text-sm text-zinc-300">
+              <tr *ngFor="let p of projects()" class="hover:bg-white/[0.02] transition-colors">
+                <td class="p-4">
+                  <img [src]="p.coverImage || 'assets/images/default-placeholder.png'"
+                       (error)="onImgError($event)"
+                       class="w-12 h-12 object-cover rounded-xl border border-zinc-800 shadow-sm">
+                </td>
+                <td class="p-4 font-semibold text-white">
+                  {{ getProjectTitle(p) }}
+                </td>
+                <td class="p-4 text-xs font-mono text-zinc-400">
+                  {{ p.clientName || '-' }}
+                </td>
+                <td class="p-4 text-center space-x-2 rtl:space-x-reverse">
+                  <button (click)="openEditForm(p.id)" class="px-3.5 py-1.5 rounded-xl border border-zinc-700 bg-zinc-800/50 text-zinc-300 hover:border-brand hover:text-brand transition-all text-xs font-mono shadow-sm">
+                    {{ site.t('Edit', 'تعديل') }}
+                  </button>
+                  <button (click)="deleteItem(p.id)" class="px-3.5 py-1.5 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all text-xs font-mono shadow-sm">
+                    {{ site.t('Delete', 'حذف') }}
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="projects().length === 0">
+                <td colspan="4" class="p-12 text-center text-zinc-500 font-mono text-sm">
+                  {{ site.t('No projects found.', 'لا توجد مشاريع مسجلة.') }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ✅ Pagination Controls -->
+      <div *ngIf="totalPages() > 1" class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
+        <p class="text-xs font-mono text-zinc-500">
+          {{ site.t('Page', 'صفحة') }} {{ currentPage() }} {{ site.t('of', 'من') }} {{ totalPages() }}
+          &middot; {{ totalCount() }} {{ site.t('projects total', 'مشروع إجمالي') }}
+        </p>
+
+        <div class="flex items-center gap-2 flex-wrap justify-center">
+          <button
+            (click)="goToPreviousPage()"
+            [disabled]="currentPage() === 1"
+            class="px-3.5 py-2 rounded-xl border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-xs font-mono disabled:opacity-40 disabled:cursor-not-allowed hover:border-brand hover:text-brand transition-all">
+            {{ site.t('Previous', 'السابق') }}
+          </button>
+
+          <button
+            *ngFor="let pageNum of pagesArray"
+            (click)="goToPage(pageNum)"
+            [class.border-brand]="pageNum === currentPage()"
+            [class.text-brand]="pageNum === currentPage()"
+            class="w-9 h-9 rounded-xl border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-xs font-mono hover:border-brand hover:text-brand transition-all">
+            {{ pageNum }}
+          </button>
+
+          <button
+            (click)="goToNextPage()"
+            [disabled]="currentPage() === totalPages()"
+            class="px-3.5 py-2 rounded-xl border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-xs font-mono disabled:opacity-40 disabled:cursor-not-allowed hover:border-brand hover:text-brand transition-all">
+            {{ site.t('Next', 'التالي') }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= 2. نموذج الإضافة والتعديل (Add / Edit Form View) ================= -->
+  <div *ngIf="isFormView()" class="max-w-4xl mx-auto space-y-6 pb-12">
+
+    <div class="flex items-center justify-between border-b border-zinc-800 pb-6">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="h-0.5 w-6 bg-brand"></span>
+          <span class="font-mono text-xs font-semibold uppercase tracking-widest text-brand">
+            {{ site.t('Dashboard / Projects Form', 'لوحة التحكم / نموذج المشروع') }}
+          </span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold text-white">
+          {{ isEditMode() ? site.t('Edit Project', 'تعديل المشروع') : site.t('Add New Project', 'إضافة مشروع جديد') }}
+        </h1>
+      </div>
+      <button (click)="closeForm()" class="px-3.5 py-2 rounded-xl border border-zinc-700 bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800 transition text-xs font-mono">
+        {{ site.t('Cancel & Back', 'إلغاء والعودة') }}
+      </button>
+    </div>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+      <!-- 🇬🇧 English Content Section -->
+      <div class="space-y-4 p-4 rounded-xl border border-zinc-800 bg-zinc-900/50">
+        <div class="flex items-center gap-2">
+          <span class="text-base leading-none">🇬🇧</span>
+          <h2 class="font-mono text-xs font-bold uppercase tracking-widest text-brand">
+            {{ site.t('English Content', 'المحتوى بالإنجليزي') }}
+          </h2>
+        </div>
+
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Project Title (English)', 'عنوان المشروع (إنجليزي)') }}
+          </label>
+          <input type="text" formControlName="titleEn" dir="ltr"
+                 class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors">
+          <div *ngIf="projectForm.get('titleEn')?.invalid && projectForm.get('titleEn')?.touched" class="text-red-400 text-xs font-mono mt-1">
+            {{ site.t('English title is required', 'العنوان الإنجليزي مطلوب') }}
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Description (English)', 'الوصف (إنجليزي)') }}
+          </label>
+          <textarea rows="3" formControlName="descriptionEn" dir="ltr"
+                    class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors"></textarea>
+        </div>
+      </div>
+
+      <!-- 🇸🇦 Arabic Content Section -->
+      <div class="space-y-4 p-4 rounded-xl border border-zinc-800 bg-zinc-900/50">
+        <div class="flex items-center gap-2">
+          <span class="text-base leading-none">🇸🇦</span>
+          <h2 class="font-mono text-xs font-bold uppercase tracking-widest text-brand">
+            {{ site.t('Arabic Content', 'المحتوى بالعربي') }}
+          </h2>
+        </div>
+
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Project Title (Arabic)', 'عنوان المشروع (عربي)') }}
+          </label>
+          <input type="text" formControlName="titleAr" dir="rtl"
+                 class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors">
+          <div *ngIf="projectForm.get('titleAr')?.invalid && projectForm.get('titleAr')?.touched" class="text-red-400 text-xs font-mono mt-1">
+            {{ site.t('Arabic title is required', 'العنوان العربي مطلوب') }}
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Description (Arabic)', 'الوصف (عربي)') }}
+          </label>
+          <textarea rows="3" formControlName="descriptionAr" dir="rtl"
+                    class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors"></textarea>
+        </div>
+      </div>
+
+      <!-- Shared fields: Client + Category -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Client Name -->
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Client Name', 'اسم العميل') }}
+          </label>
+          <input type="text" formControlName="clientName" class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors">
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="space-y-2">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Category Name', 'اسم القسم') }}
+          </label>
+          <select formControlName="categoryId" class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors">
+            <option value="" disabled selected class="bg-zinc-900 text-zinc-500">{{ site.t('Select Category Name', 'اختر اسم القسم') }}</option>
+            <option *ngFor="let cat of categories()" [value]="cat.id" class="bg-zinc-900 text-white">
+              {{ cat.name || cat.title }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ✅ Shared fields: Location + Completion Date (Month/Year) -->
+      <div class="space-y-4 p-4 rounded-xl border border-zinc-800 bg-zinc-900/50">
+        <div class="flex items-center gap-2">
+          <span class="text-base leading-none">📍</span>
+          <h2 class="font-mono text-xs font-bold uppercase tracking-widest text-brand">
+            {{ site.t('Location & Completion Date', 'الموقع وتاريخ التنفيذ') }}
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Location -->
+          <div class="space-y-2">
+            <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+              {{ site.t('Location', 'الموقع') }}
+            </label>
+            <input type="text" formControlName="location"
+                   [placeholder]="site.t('e.g. Cairo Int\'l Exhibition Center', 'مثال: أرض المعارض')"
+                   class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors placeholder:text-zinc-600">
+          </div>
+
+          <!-- Completion Month -->
+          <div class="space-y-2">
+            <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+              {{ site.t('Completion Month', 'شهر التنفيذ') }}
+            </label>
+            <select formControlName="completionMonth"
+                    class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors">
+              <option [ngValue]="null" class="bg-zinc-900 text-zinc-500">{{ site.t('Select Month', 'اختر الشهر') }}</option>
+              <option *ngFor="let m of months" [ngValue]="m.value" class="bg-zinc-900 text-white">
+                {{ site.currentLang() === 'ar' ? m.ar : m.en }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Completion Year -->
+          <div class="space-y-2">
+            <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+              {{ site.t('Completion Year', 'سنة التنفيذ') }}
+            </label>
+            <select formControlName="completionYear"
+                    class="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-zinc-900 text-white focus:outline-none focus:border-brand text-sm shadow-inner transition-colors">
+              <option [ngValue]="null" class="bg-zinc-900 text-zinc-500">{{ site.t('Select Year', 'اختر السنة') }}</option>
+              <option *ngFor="let y of years" [ngValue]="y" class="bg-zinc-900 text-white">
+                {{ y }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <p class="text-[10px] font-mono text-zinc-600">
+          {{ site.t('Optional — shown on the project details page if provided.', 'اختياري - بيظهر في صفحة تفاصيل المشروع لو اتحدد.') }}
+        </p>
+      </div>
+
+      <!-- Files Upload & Preview Section: الكفر والجاليري جنب بعض -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-zinc-800">
+
+        <!-- 🖼️ Cover Image -->
+        <div class="space-y-3">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Cover Image', 'صورة الغلاف') }}
+          </label>
+
+          <input #coverInput type="file" (change)="fileChangeEvent($event)" accept="image/*" class="hidden">
+
+          <div (click)="coverInput.click()"
+               class="relative w-full h-40 rounded-xl overflow-hidden cursor-pointer group border border-zinc-800 bg-zinc-900 shadow-inner">
+
+            <ng-container *ngIf="croppedImagePreview; else noCover">
+              <img [src]="croppedImagePreview" class="w-full h-full object-cover"
+                   (error)="onImgError($event)">
+              <div class="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <span class="text-xs font-mono text-white px-3 py-1.5 rounded-lg bg-black/40">
+                  {{ site.t('Change Cover', 'تغيير الغلاف') }}
+                </span>
+              </div>
+            </ng-container>
+
+            <ng-template #noCover>
+              <div class="w-full h-full flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-zinc-700 text-zinc-500 hover:border-brand hover:text-brand transition-colors">
+                <span class="text-xl leading-none">+</span>
+                <span class="text-[11px] font-mono">{{ site.t('Add Cover', 'إضافة غلاف') }}</span>
+              </div>
+            </ng-template>
+          </div>
+
+          <p class="text-[10px] font-mono text-zinc-600">
+            {{ site.t('Click to upload & crop the cover image', 'دوس عشان ترفع وتقص صورة الغلاف') }}
+          </p>
+        </div>
+
+        <!-- 🖼️ Gallery Images -->
+        <div class="space-y-3">
+          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
+            {{ site.t('Gallery Images', 'صور المعرض') }}
+          </label>
+
+          <div class="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto pr-1">
+            <div *ngFor="let img of existingGalleryImages; let i = index"
+                 class="relative group aspect-square rounded-lg overflow-hidden border border-zinc-800 bg-zinc-900">
+              <img [src]="img.url || img.imageUrl || img.path || img"
+                   (error)="onImgError($event)"
+                   alt="Gallery Image" class="w-full h-full object-cover">
+              <button type="button" (click)="removeExistingGalleryImage(img, i)"
+                      class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="text-red-400 text-lg leading-none">✕</span>
+              </button>
+            </div>
+
+            <div *ngFor="let preview of galleryPreviews; let i = index"
+                 class="relative group aspect-square rounded-lg overflow-hidden border border-zinc-800 bg-zinc-900">
+              <img [src]="preview" alt="New Gallery Preview" class="w-full h-full object-cover">
+              <button type="button" (click)="removeNewGalleryImage(i)"
+                      class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="text-red-400 text-lg leading-none">✕</span>
+              </button>
+            </div>
+
+            <label for="galleryUpload"
+                   class="aspect-square flex flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-brand/50 text-brand bg-brand/5 hover:bg-brand/10 cursor-pointer text-[10px] font-mono font-semibold transition-all">
+              <span class="text-base leading-none">+</span>
+              {{ site.t('Add', 'إضافة') }}
+            </label>
+          </div>
+
+          <input type="file" id="galleryUpload" multiple (change)="onGallerySelected($event)" class="hidden" />
+        </div>
+
+      </div>
+
+      <!-- 🎯 Cover Crop Modal -->
+      <div *ngIf="imageChangedEvent"
+           class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 w-full max-w-md shadow-2xl">
+          <p class="text-[11px] font-mono text-zinc-400 mb-3 text-center leading-relaxed">
+            {{ site.t('Drag to choose the visible part, then confirm', 'اسحب لتحديد الجزء اللي هيظهر، وبعدين دوس تأكيد') }}
+          </p>
+
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="false"
+            format="jpeg"
+            (imageCropped)="imageCropped($event)"
+            (loadImageFailed)="loadImageFailed()"
+            class="block w-full h-64 rounded-xl overflow-hidden bg-black"
+          ></image-cropper>
+
+          <div class="flex justify-center gap-2 mt-4">
+            <button type="button" (click)="cancelCoverCrop()" class="flex-1 px-3 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono transition-colors">
+              {{ site.t('Cancel', 'إلغاء') }}
+            </button>
+            <button type="button" (click)="confirmCoverCrop()" class="btn-brand flex-1 px-3 py-2.5 rounded-lg text-xs font-mono font-bold shadow-md">
+              {{ site.t('Save', 'حفظ') }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-6 flex justify-end gap-3">
+        <button type="submit" [disabled]="isLoading()" class="btn-brand w-full sm:w-auto px-6 py-3 rounded-xl text-xs font-mono font-bold shadow-xl">
+          {{ isLoading() ? site.t('Saving...', 'جاري الحفظ...') : (isEditMode() ? site.t('Update Project', 'تحديث المشروع') : site.t('Create Project', 'إنشاء المشروع')) }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

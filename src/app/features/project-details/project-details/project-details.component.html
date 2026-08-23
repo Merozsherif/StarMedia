@@ -1,0 +1,271 @@
+<!-- Loading state -->
+<div *ngIf="loading" class="container-x pt-40 pb-24 text-center text-muted-foreground">
+  {{ site.t('Loading…', 'جارِ التحميل…') }}
+</div>
+
+<ng-container *ngIf="!loading && project; else notFound">
+
+  <!-- Hero -->
+  <section class="relative isolate min-h-[55svh] overflow-hidden bg-black pt-32 text-white">
+    <img [src]="project.image" [alt]="project.title" class="absolute inset-0 h-full w-full object-cover opacity-40" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30"></div>
+
+    <div class="container-x relative z-10 flex min-h-[calc(55svh-8rem)] flex-col justify-end pb-16">
+
+      <a
+        routerLink="/portfolio"
+        class="mb-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-white/60 hover:text-brand">
+        {{ site.t('Back to Portfolio', 'العودة إلى المشاريع') }}
+      </a>
+
+      <div class="mb-6 flex items-center gap-3">
+        <span class="text-eyebrow">{{ project.category }}</span>
+        <span class="h-px w-6 bg-white/40"></span>
+        <span class="text-xs text-white/60">{{ project.year }}</span>
+      </div>
+
+      <h1 class="text-display max-w-5xl text-5xl md:text-8xl">
+        {{ project.title }}
+      </h1>
+
+      <p class="mt-6 text-lg text-white/70">
+        {{ project.client }}
+      </p>
+
+    </div>
+  </section>
+
+  <!-- Split Section: Gallery + Details -->
+  <section class="py-16 md:py-24">
+    <div class="container-x grid gap-10 lg:grid-cols-2 lg:gap-14">
+
+      <!-- عمود الجاليري: Masonry -->
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <div class="grid grid-cols-2 gap-3" *ngIf="gallery.length > 0; else noGallery">
+          <button
+            *ngFor="let img of gallery; let i = index"
+            type="button"
+            (click)="openLightbox(i)"
+            class="group relative block overflow-hidden bg-black"
+            [ngClass]="i % 3 === 0 ? 'col-span-2 aspect-[16/9]' : 'col-span-1 aspect-[4/3]'"
+          >
+            <img
+              [src]="img"
+              alt=""
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20"></div>
+          </button>
+        </div>
+
+        <ng-template #noGallery>
+          <div class="aspect-[4/3] w-full bg-surface"></div>
+        </ng-template>
+      </div>
+
+      <!-- عمود التفاصيل: Cards -->
+      <div>
+
+        <!-- Info cards -->
+        <div class="mb-6 grid grid-cols-2 gap-3">
+
+          <div class="border border-border/60 bg-surface p-5">
+            <div class="text-eyebrow mb-2 text-[10px] text-muted-foreground">
+              {{ site.t('Client', 'العميل') }}
+            </div>
+            <div class="text-lg font-semibold">{{ project.client }}</div>
+          </div>
+
+          <div class="border border-border/60 bg-surface p-5">
+            <div class="text-eyebrow mb-2 text-[10px] text-muted-foreground">
+              {{ site.t('Service', 'الخدمة') }}
+            </div>
+            <div class="text-lg font-semibold">{{ project.category }}</div>
+          </div>
+
+          <!-- ✅ الموقع الحقيقي - جاي من الداتابيز -->
+          <div class="border border-border/60 bg-surface p-5">
+            <div class="text-eyebrow mb-2 text-[10px] text-muted-foreground">
+              {{ site.t('Location', 'الموقع') }}
+            </div>
+            <div class="text-lg font-semibold">
+              {{ project.location || site.t('—', '—') }}
+            </div>
+          </div>
+
+          <!-- ✅ تاريخ التنفيذ - بدل كارت Scope of Work -->
+          <div class="border border-border/60 bg-surface p-5">
+            <div class="text-eyebrow mb-2 text-[10px] text-muted-foreground">
+              {{ site.t('Date', 'التاريخ') }}
+            </div>
+            <div class="text-lg font-semibold">
+              {{ project.completionDate || site.t('—', '—') }}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Overview card -->
+        <div class="mb-3 border border-border/60 bg-surface p-6">
+          <h2 class="text-eyebrow mb-3 text-brand">
+            {{ site.t('Project Overview', 'نبذة عن المشروع') }}
+          </h2>
+          <p class="text-lg leading-relaxed">
+            {{ project.summary }}
+          </p>
+        </div>
+
+        <!-- Breakdown cards -->
+        <div
+          *ngFor="let b of breakdown; let i = index"
+          class="mb-3 border border-t-2 border-border/60 border-t-brand bg-surface p-6"
+        >
+          <div class="mb-2 flex items-center gap-3">
+            <span class="text-display text-2xl text-brand/50">
+              {{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }}
+            </span>
+            <h3 class="text-eyebrow text-foreground">
+              {{ b.k }}
+            </h3>
+          </div>
+          <p class="text-sm leading-relaxed text-muted-foreground">
+            {{ b.v }}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div
+    *ngIf="selectedImage"
+    (click)="closeLightbox()"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 md:p-10"
+  >
+    <button
+      type="button"
+      (click)="closeLightbox()"
+      class="absolute top-6 right-6 text-sm font-semibold uppercase tracking-widest text-white/60 hover:text-brand"
+    >
+      {{ site.t('Close', 'إغلاق') }} ✕
+    </button>
+
+    <button
+      *ngIf="gallery.length > 1"
+      type="button"
+      (click)="prevImage($event)"
+      class="absolute left-4 top-1/2 -translate-y-1/2 text-3xl text-white/60 hover:text-brand md:left-8"
+    >
+      ‹
+    </button>
+
+    <img
+      [src]="selectedImage"
+      (click)="$event.stopPropagation()"
+      alt=""
+      class="max-h-full max-w-full object-contain" />
+
+    <button
+      *ngIf="gallery.length > 1"
+      type="button"
+      (click)="nextImage($event)"
+      class="absolute right-4 top-1/2 -translate-y-1/2 text-3xl text-white/60 hover:text-brand md:right-8"
+    >
+      ›
+    </button>
+
+    <div *ngIf="gallery.length > 1" class="absolute bottom-6 text-xs text-white/50">
+      {{ selectedIndex + 1 }} / {{ gallery.length }}
+    </div>
+  </div>
+
+  <!-- Related Projects -->
+  <section
+    *ngIf="related.length > 0"
+    class="border-t border-border/40 bg-surface py-24 md:py-32">
+
+    <div class="container-x">
+
+      <div class="mb-10 flex items-end justify-between">
+
+        <h2 class="text-display text-3xl md:text-5xl">
+          {{ site.t('Related Projects', 'مشاريع مشابهة') }}
+        </h2>
+
+        <a
+          routerLink="/portfolio"
+          class="btn-ghost-brand">
+          {{ site.t('View All Projects', 'عرض جميع المشاريع') }}
+        </a>
+
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+
+        <a
+          *ngFor="let r of related"
+          [routerLink]="['/portfolio', r.id]"
+          class="group relative block overflow-hidden bg-black">
+
+          <div class="relative aspect-[4/3] overflow-hidden">
+
+            <img
+              [src]="r.image"
+              [alt]="r.title"
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+
+          </div>
+
+          <div class="absolute inset-x-0 bottom-0 p-6">
+
+            <div class="text-[10px] font-semibold uppercase tracking-[0.25em] text-brand">
+              {{ r.category }}
+            </div>
+
+            <h3 class="mt-1 text-xl font-semibold text-white">
+              {{ r.title }}
+            </h3>
+
+          </div>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</ng-container>
+
+<ng-template #notFound>
+
+  <div *ngIf="!loading" class="container-x pb-24 pt-40 text-center">
+
+    <h1 class="text-display text-4xl">
+      {{ site.t('Project Not Found', 'المشروع غير موجود') }}
+    </h1>
+
+    <p class="mt-4 text-muted-foreground">
+      {{
+        site.t(
+          'The requested project could not be found or may have been removed.',
+          'المشروع المطلوب غير متوفر أو ربما تم حذفه.'
+        )
+      }}
+    </p>
+
+    <a
+      routerLink="/portfolio"
+      class="mt-8 inline-flex text-brand">
+      {{ site.t('Back to Portfolio', 'العودة إلى المشاريع') }}
+    </a>
+
+  </div>
+
+</ng-template>

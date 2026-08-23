@@ -1,0 +1,103 @@
+<header
+  class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  [ngClass]="(scrolled || open)
+    ? 'border-b border-border bg-background shadow-sm'
+    : 'bg-background'"
+>
+
+  <div class="container-x flex h-20 items-center justify-between gap-4">
+
+    <!-- Logo -->
+    <a routerLink="/" class="flex shrink-0 items-center gap-2">
+      <img
+       [src]="site.theme() === 'dark' ? 'assets/whitegreen.png' : 'assets/blackgreen.png'"
+        alt="Star Media"
+        class="h-10 w-auto transition-opacity duration-300"
+      >
+    </a>
+
+    <!-- Desktop Menu Links -->
+    <nav class="hidden items-center gap-1 lg:flex">
+      <a
+        *ngFor="let item of nav"
+        [routerLink]="item.to"
+        class="relative px-4 py-2 text-sm font-medium tracking-wide transition-colors"
+        [ngClass]="isActive(item.to)
+        ? 'text-brand font-semibold'
+        : 'text-foreground/80 hover:text-foreground'"
+      >
+        {{ site.t(item.en, item.ar) }}
+
+        <span
+          *ngIf="isActive(item.to)"
+          class="absolute inset-x-4 bottom-1 h-0.5 bg-brand rounded-full">
+        </span>
+      </a>
+    </nav>
+
+    <!-- Right Actions -->
+    <div class="flex items-center gap-2">
+
+      <!-- Language -->
+      <button
+        (click)="site.toggleLang()"
+        class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border/60 px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground transition-colors hover:border-brand hover:text-brand"
+      >
+   {{ site.lang() === 'en' ? 'AR' : 'EN' }}
+      </button>
+
+      <!-- Theme -->
+      <button
+        (click)="site.toggleTheme()"
+        class="grid h-9 w-9 place-items-center rounded-full border border-border/60 text-foreground transition-colors hover:border-brand hover:text-brand"
+      >
+{{ site.theme() === 'dark' ? '☀' : '🌙' }}
+      </button>
+
+      <!-- CTA -->
+      <a
+        routerLink="/contact"
+        class="hidden xl:inline-flex btn-brand ml-2"
+      >
+        {{ site.t('Start Your Project', 'ابدأ مشروعك') }}
+      </a>
+
+      <!-- Mobile Button -->
+      <button
+        (click)="toggleMenu()"
+        class="grid h-9 w-9 place-items-center rounded-full border border-border/60 text-foreground lg:hidden"
+      >
+        {{ open ? '✕' : '☰' }}
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div
+    *ngIf="open"
+    class="border-t border-border bg-background lg:hidden"
+  >
+    <nav class="container-x flex flex-col py-4">
+      <a
+        *ngFor="let item of nav"
+        [routerLink]="item.to"
+        (click)="toggleMenu()"
+        class="border-b border-border/40 py-4 text-base font-medium last:border-none"
+        [ngClass]="isActive(item.to) ? 'text-brand font-semibold' : 'text-foreground/80'"
+      >
+        {{ site.t(item.en, item.ar) }}
+      </a>
+
+      <a
+        routerLink="/contact"
+        (click)="toggleMenu()"
+        class="btn-brand mt-4 justify-center xl:hidden"
+      >
+        {{ site.t('Start Your Project', 'ابدأ مشروعك') }}
+      </a>
+    </nav>
+  </div>
+
+</header>

@@ -1,0 +1,456 @@
+<!-- Hero Section -->
+<section class="relative isolate flex min-h-[100svh] w-full items-end overflow-hidden bg-black text-white">
+  <!-- Hero Background Image -->
+  <img
+    src="assets/hero-booth.jpg"
+    alt="Star Media production floor"
+    loading="eager"
+    (error)="$any($event.target).src = 'assets/factory-1.jpg'"
+    class="absolute inset-0 h-full w-full object-cover opacity-50 transition-opacity duration-1000"
+    width="1920"
+    height="1280"
+  />
+
+  <!-- Gradients & Overlays -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
+  <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/90 to-transparent"></div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20 pt-32 md:pb-28">
+
+    <!-- Eyebrow Tag -->
+    <div class="mb-6 flex items-center gap-3 animate-fade-up">
+      <span class="h-0.5 w-10 bg-brand"></span>
+      <span class="font-mono text-xs font-semibold uppercase tracking-[0.3em] text-brand">
+        {{ site.t('Creative × Production House', 'بيت الإبداع والإنتاج') }}
+      </span>
+    </div>
+
+    <!-- Main Title -->
+    <h1 class="max-w-5xl text-[clamp(2.5rem,7vw,6.5rem)] font-bold tracking-tight text-white leading-[1.1] animate-fade-up" style="animation-delay: 0.1s">
+      {{ site.t('We build brands', 'نبني علاماتٍ') }}
+      <br />
+      <span class="italic font-light text-zinc-300">{{ site.t('from ', 'من ') }}</span>
+      <span class="text-brand">{{ site.t('vision', 'الرؤية') }}</span>
+      <span class="italic font-light text-zinc-300">{{ site.t(' to ', ' إلى ') }}</span>
+      <span class="text-white">{{ site.t('reality.', 'الواقع.') }}</span>
+    </h1>
+
+    <!-- Description & CTAs -->
+    <div class="mt-10 flex flex-col items-start gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <p class="max-w-2xl text-base md:text-lg leading-relaxed text-zinc-300 animate-fade-up" style="animation-delay: 0.25s">
+        {{ site.t(
+          'Star Media is a full-service creative & production house — exhibitions, booths, printing, branding, signage, events and activations executed end-to-end from our own facility.',
+          'ستار ميديا بيت متكامل للإبداع والإنتاج — معارض، أجنحة، طباعة، هوية، لافتات، فعاليات وتفعيل، ننفذها بالكامل داخل مصنعنا.'
+        ) }}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 animate-fade-up shrink-0" style="animation-delay: 0.4s">
+        <a routerLink="/portfolio" class="btn-brand">
+          {{ site.t('View Portfolio', 'شاهد الأعمال') }}
+        </a>
+        <a routerLink="/contact" class="btn-ghost-brand !border-white/20 !text-white hover:!border-brand hover:!text-brand">
+          {{ site.t('Contact Us', 'تواصل معنا') }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scroll Down Indicator -->
+  <div class="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-3 text-xs uppercase tracking-widest text-zinc-400 md:flex">
+    <span class="h-8 w-px bg-white/20"></span>
+    <span>{{ site.t('Scroll', 'مرّر') }}</span>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="border-y border-border/40 bg-surface">
+  <div class="container-x grid grid-cols-2 divide-x divide-border/40 lg:grid-cols-4 rtl:divide-x-reverse">
+    <div *ngFor="let s of stats; let i = index" class="px-4 py-14 text-center md:px-8">
+      <div class="text-display text-4xl md:text-6xl text-foreground">
+        {{ statValues[i] | number }}{{ s.suffix }}
+      </div>
+      <div class="mt-3 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+        {{ site.t(s.en, s.ar) }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Preview -->
+<!-- Services Section -->
+<section class="relative w-full border-t border-border/40 bg-background py-24 md:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <span class="mb-3 inline-block font-mono text-xs font-semibold uppercase tracking-[0.3em] text-brand">
+          {{ site.t('Our Services', 'خدماتنا') }}
+        </span>
+        <h2 class="text-display text-4xl font-bold tracking-tight text-foreground md:text-6xl">
+          {{ site.t('Complete Production.', 'إنتاج متكامل.') }}
+          <br />
+          <span class="italic font-light text-brand">
+            {{ site.t('From Idea To Reality.', 'من الفكرة إلى التنفيذ.') }}
+          </span>
+        </h2>
+      </div>
+
+      <a routerLink="/services" class="btn-ghost-brand shrink-0">
+        {{ site.t('View All Services', 'كل الخدمات') }}
+      </a>
+    </div>
+
+    <!-- Modern Grid (3 Cards Responsive Setup) -->
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <a
+        *ngFor="let g of serviceGroups; let i = index"
+        [routerLink]="['/services', g.slug]"
+        class="group relative flex flex-col overflow-hidden rounded-xl border border-border/40 bg-surface backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-brand/60 hover:shadow-2xl hover:shadow-brand/10"
+      >
+        <!-- Top Image Section with Gradient Backdrop -->
+        <div class="relative aspect-[16/10] w-full overflow-hidden bg-muted">
+          <img
+            [src]="g.img"
+            [alt]="site.lang() === 'ar' ? g.ar : g.en"
+            loading="lazy"
+            (error)="$any($event.target).src = 'assets/hero-booth.jpg'"
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-surface/70 via-surface/10 to-transparent"></div>
+
+          <!-- Number Badge -->
+          <div class="absolute top-4 left-4 rounded-md bg-background/60 backdrop-blur-md px-3 py-1 font-mono text-xs font-bold text-brand border border-border/40">
+            0{{ i + 1 }}
+          </div>
+        </div>
+
+        <!-- Content Container -->
+        <div class="flex flex-1 flex-col justify-between p-6 md:p-8">
+          <div>
+            <h3 class="mb-3 text-2xl font-bold text-foreground transition-colors group-hover:text-brand">
+              {{ site.lang() === 'ar' ? g.ar : g.en }}
+            </h3>
+
+            <p class="mb-6 text-sm leading-relaxed text-muted-foreground">
+              {{ site.lang() === 'ar' ? g.desc_ar : g.desc }}
+            </p>
+
+            <!-- Bullet Items -->
+            <ul class="mb-8 space-y-3 border-t border-border/20 pt-6">
+              <li
+                *ngFor="let item of (site.lang() === 'ar' ? g.itemsAr : g.items).slice(0, 3)"
+                class="flex items-center gap-3 text-xs md:text-sm font-medium text-foreground/80"
+              >
+                <span class="h-1.5 w-1.5 rounded-full bg-brand"></span>
+                <span>{{ item }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Explore Label -->
+          <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand transition-all group-hover:gap-4">
+            <span>{{ site.t('Explore Service', 'استكشف الخدمة') }}</span>
+            <span class="text-base">→</span>
+          </span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Equipment Teaser -->
+<section class="border-t border-border/40 bg-background py-24 md:py-32">
+  <div class="container-x">
+
+    <!-- Header -->
+    <div class="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <div class="mb-4 flex items-center gap-3">
+          <span class="h-0.5 w-8 bg-brand"></span>
+          <span class="font-mono text-xs font-semibold uppercase tracking-widest text-brand">
+            {{ site.t('Inside The Workshop', 'داخل الورشة') }}
+          </span>
+        </div>
+        <h2 class="text-display text-4xl font-bold tracking-tight text-foreground md:text-6xl">
+          {{ site.t('Machinery That Powers', 'مكنة تشغّل') }}
+          <br />
+          <span class="italic font-light text-brand">
+            {{ site.t('Every Detail.', 'كل التفاصيل.') }}
+          </span>
+        </h2>
+      </div>
+
+      <a routerLink="/about" class="btn-ghost-brand shrink-0">
+        {{ site.t('Explore Our Studio', 'اكتشف الاستوديو') }}
+      </a>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+      <a
+        *ngFor="let e of equipment"
+        routerLink="/about"
+        class="group relative aspect-square overflow-hidden rounded-xl border border-border/40 transition-all duration-500 hover:border-brand"
+      >
+        <img
+          [src]="e.img"
+          [alt]="site.lang() === 'ar' ? e.ar : e.en"
+          loading="lazy"
+          (error)="$any($event.target).src = 'assets/factory-1.jpg'"
+          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        <!-- Hover Tint -->
+        <div class="absolute inset-0 bg-brand/0 transition-colors duration-500 group-hover:bg-brand/20"></div>
+
+        <!-- Bottom Label -->
+        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 md:p-5">
+          <p class="text-sm font-bold text-white md:text-base">
+            {{ site.lang() === 'ar' ? e.ar : e.en }}
+          </p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Featured Work -->
+<section class="border-t border-border/40 bg-surface py-28 md:py-40">
+  <div class="container-x">
+    <div class="mb-10 flex flex-col gap-8 md:mb-16 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-3xl">
+        <div class="text-eyebrow mb-4">{{ site.t('Featured Work', 'أعمال مختارة') }}</div>
+        <h2 class="text-display text-4xl md:text-6xl">
+          {{ site.t('Recent projects', 'مشاريع حديثة') }}
+          <br />
+          <span class="italic font-light text-muted-foreground">{{ site.t("we're proud of.", 'نفتخر بها.') }}</span>
+        </h2>
+      </div>
+      <a routerLink="/portfolio" class="btn-ghost-brand self-start md:self-end">{{ site.t('View All', 'شاهد الكل') }}</a>
+    </div>
+
+    <!-- الفلاتر — حقيقية من الـ API، نفس التابات المستخدمة في صفحة Portfolio -->
+    <div class="mb-10 flex flex-wrap gap-2">
+      <button
+        *ngFor="let c of categories"
+        (click)="setCategory(c)"
+        class="rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-all"
+        [ngClass]="selectedCategory.id === c.id ? 'border-brand bg-brand text-brand-foreground' : 'border-border/60 text-muted-foreground hover:border-brand hover:text-brand'"
+      >
+        {{ getCategoryDisplayName(c.id) }}
+      </button>
+    </div>
+
+    <!-- Loading state -->
+    <div *ngIf="loadingProjects" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        *ngFor="let i of [1,2,3,4,5,6]"
+        class="aspect-[4/3] animate-pulse bg-muted"
+        [class.md:col-span-2]="i === 1"
+        [class.md:row-span-2]="i === 1"
+      ></div>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="!loadingProjects && projectsError" class="py-24 text-center text-red-400">
+      {{ site.t('Something went wrong.', 'حدث خطأ ما.') }}
+    </div>
+
+    <!-- Empty state -->
+    <p *ngIf="!loadingProjects && !projectsError && featuredProjects.length === 0" class="py-24 text-center text-muted-foreground">
+      {{ site.t('No projects found.', 'لا توجد نتائج.') }}
+    </p>
+
+    <!-- Projects Grid — بيانات حقيقية -->
+    <div *ngIf="!loadingProjects && !projectsError && featuredProjects.length" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <a
+        *ngFor="let p of featuredProjects; let i = index"
+        [routerLink]="['/portfolio', p.id]"
+        class="group relative block overflow-hidden bg-black"
+        [class.md:col-span-2]="i === 0"
+        [class.md:row-span-2]="i === 0"
+      >
+        <div class="relative overflow-hidden" [ngClass]="i === 0 ? 'aspect-[16/12]' : 'aspect-[4/3]'">
+          <img [src]="p.image" [alt]="p.title" loading="lazy" class="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90 transition-opacity"></div>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 p-6 md:p-8">
+          <div class="mb-3 flex items-center gap-3">
+            <span *ngIf="p.categoryId" class="text-[10px] font-semibold uppercase tracking-[0.25em] text-brand">{{ getCategoryDisplayName(p.categoryId) }}</span>
+            <span *ngIf="p.categoryId && p.year" class="h-px w-6 bg-white/40"></span>
+            <span *ngIf="p.year" class="text-xs text-white/60">{{ p.year }}</span>
+          </div>
+          <h3 class="font-display font-semibold text-white" [ngClass]="i === 0 ? 'text-3xl md:text-5xl' : 'text-xl md:text-2xl'">
+            {{ p.title }}
+          </h3>
+          <div *ngIf="p.client" class="mt-4 flex items-center gap-2 text-sm text-white/70">
+            <span>{{ p.client }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Factory Strip -->
+<section class="relative overflow-hidden">
+  <div class="grid lg:grid-cols-2">
+    <div class="relative aspect-[4/3] lg:aspect-auto">
+      <img src="assets/factory-1.jpg" alt="Star Media production facility" loading="lazy" class="h-full w-full object-cover" />
+    </div>
+    <div class="flex flex-col justify-center bg-black p-8 py-20 text-white md:p-16 lg:p-24">
+      <div class="text-eyebrow mb-4">{{ site.t('Inside the studio', 'داخل الاستوديو') }}</div>
+      <h2 class="text-display text-4xl md:text-6xl">
+        {{ site.t('A production floor', 'أرضية إنتاج') }}
+        <br />
+        <span class="text-brand italic font-light">{{ site.t('without compromise.', 'بلا تنازل.') }}</span>
+      </h2>
+      <p class="mt-8 max-w-lg text-white/70">
+        {{ site.t(
+          'Wide-format UV printing, CNC and laser fabrication, welding, carpentry, paint, LED, and a dedicated finishing bay — 4,200 m² of in-house capability under one roof.',
+          'طباعة يو في، تصنيع CNC وليزر، لحام ونجارة ودهان و LED — 4,200 م² من القدرات الداخلية تحت سقف واحد.'
+        ) }}
+      </p>
+      <div class="mt-10">
+        <a routerLink="/about" class="btn-brand">{{ site.t('Discover the Studio', 'اكتشف الاستوديو') }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Clients Marquee -->
+<section class="border-y border-border/40 bg-background py-20 overflow-hidden">
+  <div class="container-x mb-12 text-center">
+    <div class="text-eyebrow mb-3">{{ site.t('Trusted by leading brands', 'بثقة أهم العلامات') }}</div>
+    <h2 class="text-display text-3xl md:text-4xl">{{ site.t('Global brands. Local craft.', 'علامات عالمية. حرفية محلية.') }}</h2>
+  </div>
+
+  <!-- الشريط الأول: يتحرك شمال -->
+  <div class="relative overflow-hidden mb-6">
+    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-background to-transparent"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-background to-transparent"></div>
+
+    <div class="flex w-max animate-marquee gap-8 px-4">
+      <div *ngFor="let c of clientsMarquee" class="marquee-card">
+        <img [src]="c.logoUrl" [alt]="c.name" loading="lazy" class="marquee-logo-img" />
+      </div>
+    </div>
+  </div>
+
+  <!-- الشريط الثاني: يتحرك يمين (عكس الأول وبحجم كبير) -->
+  <div class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-background to-transparent"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-background to-transparent"></div>
+
+    <div class="flex w-max animate-marquee-reverse gap-8 px-4">
+      <div *ngFor="let c of clientsMarquee" class="marquee-card">
+        <img [src]="c.logoUrl" [alt]="c.name" loading="lazy" class="marquee-logo-img" />
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- FAQ -->
+<section class="py-28 md:py-40">
+  <div class="container-x grid gap-16 lg:grid-cols-[1fr_1.4fr]">
+    <div>
+      <div class="text-eyebrow mb-4">{{ site.t('FAQ', 'الأسئلة الشائعة') }}</div>
+      <h2 class="text-display text-4xl md:text-5xl">
+        {{ site.t('Questions,', 'أسئلة،') }}
+        <br />
+        <span class="italic font-light text-muted-foreground">{{ site.t('answered.', 'أُجيب عنها.') }}</span>
+      </h2>
+      <p class="mt-6 max-w-md text-muted-foreground">
+        {{ site.t("Can't find what you're looking for? Reach out and we'll walk you through the process.", 'لم تجد ما تبحث عنه؟ تواصل معنا وسنشرح لك المسار.') }}
+      </p>
+    </div>
+    <div class="divide-y divide-border/60 border-y border-border/60">
+      <div *ngFor="let f of faqs; let i = index">
+        <button class="flex w-full items-center justify-between gap-6 py-6 text-start" (click)="toggleFaq(i)">
+          <span class="text-lg font-medium md:text-xl">{{ site.lang() === 'ar' ? f.q_ar : f.q_en }}</span>
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-border">{{ openFaqIndex === i ? '−' : '+' }}</span>
+        </button>
+        <div *ngIf="openFaqIndex === i" class="pb-6 pe-16 text-muted-foreground animate-fade-up">
+          {{ site.lang() === 'ar' ? f.a_ar : f.a_en }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Location / Contact -->
+<section class="border-t border-border/40 bg-surface text-zinc-900 dark:text-white">
+  <div class="grid lg:grid-cols-2">
+    <!-- Contact Info Section -->
+    <div class="p-8 py-20 md:p-16 lg:p-24">
+      <div class="text-eyebrow mb-4">{{ site.t('Visit us', 'زُر الاستوديو') }}</div>
+      <h2 class="text-display text-4xl md:text-6xl text-zinc-900 dark:text-white">
+        {{ site.t('Come see', 'تعال') }}
+        <br />
+        <span class="text-brand italic font-light">{{ site.t("where it's made.", 'لترى مكان الصنع.') }}</span>
+      </h2>
+
+      <ul class="mt-10 space-y-6 text-base md:text-lg">
+        <!-- Address -->
+        <li class="flex items-start gap-4">
+          <div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 0C7.802 0 4 3.403 4 7.602c0 4.198 3.802 9.398 8 14.398 4.198-5 8-10.2 8-14.398C20 3.403 16.198 0 12 0zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/>
+            </svg>
+          </div>
+          <span class="text-zinc-700 dark:text-zinc-300 pt-1.5">
+            {{ site.t('5 Abd El-Moneim Fawzi, New Nozha, Cairo, Egypt', '٥ شارع عبد المنعم فوزي، النزهة الجديدة، القاهرة، مصر') }}
+          </span>
+        </li>
+
+        <!-- Email -->
+        <li class="flex items-center gap-4">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </div>
+          <a href="mailto:info@starmedia-eg.com" class="text-zinc-700 dark:text-zinc-300 hover:text-brand transition-colors">
+            info&#64;starmedia-eg.com
+          </a>
+        </li>
+
+        <!-- Phone Numbers -->
+        <li class="flex items-center gap-4">
+          <div class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-zinc-700 dark:text-zinc-300">
+            <a href="tel:0221808835" class="hover:text-brand transition-colors">02 2180 8835</a>
+            <span class="text-zinc-400">|</span>
+            <a href="tel:+201229970969" class="hover:text-brand transition-colors">+20 122 9970 969</a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-10">
+        <a routerLink="/contact" class="btn-brand">{{ site.t('Start a Project', 'ابدأ مشروعك') }}</a>
+      </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="relative min-h-[400px] bg-black">
+      <iframe
+        title="Star Media location"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3450.964838557323!2d31.364018875064325!3d30.12381961480643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145816881c0dbe0d%3A0xe4d802472a86608b!2s5%20Abd%20El-Moneim%20Fawzi%2C%20Huckstep%2C%20El%20Nozha%2C%20Cairo%20Governorate%204473141!5e0!3m2!1sen!2seg!4v1785458631442!5m2!1sen!2seg"
+        class="h-full w-full border-0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+  </div>
+</section>

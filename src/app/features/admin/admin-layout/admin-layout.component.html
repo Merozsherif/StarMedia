@@ -1,0 +1,72 @@
+<div class="min-h-screen bg-[#0a0c0f] text-slate-100 flex flex-col md:flex-row font-sans" [attr.dir]="site.currentLang() === 'ar' ? 'rtl' : 'ltr'">
+
+  <!-- Mobile Header (Visible only on small screens) -->
+  <header class="md:hidden bg-[#12151a] border-b border-slate-800 p-4 flex justify-between items-center z-30">
+    <img src="assets/whitegreen.png" alt="Star Media" class="h-8 w-auto" />
+    <button (click)="toggleSidebar()" class="p-2 rounded-lg bg-slate-800 text-slate-300 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Sidebar Overlay for Mobile -->
+  <div *ngIf="isSidebarOpen" (click)="toggleSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"></div>
+
+  <!-- Sidebar Container -->
+  <aside [class.translate-x-0]="isSidebarOpen"
+         [class.-translate-x-full]="!isSidebarOpen && site.currentLang() === 'en'"
+         [class.translate-x-full]="!isSidebarOpen && site.currentLang() === 'ar'"
+         class="fixed md:static inset-y-0 z-50 w-64 bg-[#12151a] border-r border-slate-800/80 p-6 flex flex-col justify-between transition-transform duration-300 md:translate-x-0 ltr:border-r rtl:border-l rtl:border-r-0">
+
+    <div class="space-y-8">
+      <!-- Logo Header -->
+      <div class="flex items-center justify-between">
+        <img src="assets/whitegreen.png" alt="Star Media Logo" class="h-10 w-auto object-contain" />
+        <button (click)="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white">&times;</button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="space-y-1.5">
+        <a routerLink="/admin/dashboard" (click)="isSidebarOpen = false" routerLinkActive="bg-[#22c55e]/10 text-[#22c55e] font-semibold border-[#22c55e]/30"
+           class="flex items-center px-4 py-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition text-sm">
+           <span>{{ site.t('Dashboard', 'الإحصائيات') }}</span>
+        </a>
+
+        <a routerLink="/admin/categories" (click)="isSidebarOpen = false" routerLinkActive="bg-[#22c55e]/10 text-[#22c55e] font-semibold border-[#22c55e]/30"
+           class="flex items-center px-4 py-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition text-sm">
+           <span>{{ site.t('Categories', 'إدارة الأقسام') }}</span>
+        </a>
+
+        <a routerLink="/admin/projects" (click)="isSidebarOpen = false" routerLinkActive="bg-[#22c55e]/10 text-[#22c55e] font-semibold border-[#22c55e]/30"
+           class="flex items-center px-4 py-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition text-sm">
+           <span>{{ site.t('Projects', 'إدارة المشاريع') }}</span>
+        </a>
+
+        <!-- <a routerLink="/admin/services" (click)="isSidebarOpen = false" routerLinkActive="bg-[#22c55e]/10 text-[#22c55e] font-semibold border-[#22c55e]/30"
+           class="flex items-center px-4 py-3 rounded-xl border border-transparent text-slate-400 hover:text-slate-100 hover:bg-slate-800/40 transition text-sm">
+           <span>{{ site.t('Services', 'إدارة الخدمات') }}</span>
+        </a> -->
+      </nav>
+    </div>
+
+    <!-- Bottom Controls (Language & Logout) -->
+    <div class="space-y-3 pt-6 border-t border-slate-800/80">
+      <button (click)="site.toggleLanguage()"
+              class="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#0a0c0f] border border-slate-800 text-xs font-semibold text-slate-300 hover:text-[#22c55e] hover:border-[#22c55e]/40 transition">
+        <span>Language</span>
+        <span class="text-[#22c55e] uppercase font-bold">{{ site.currentLang() === 'ar' ? 'English' : 'عربي' }}</span>
+      </button>
+
+      <button (click)="logout()"
+              class="w-full px-4 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition text-xs font-bold text-center">
+        {{ site.t('Sign Out', 'تسجيل الخروج') }}
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Viewport -->
+  <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,139 @@
+import { Component } from '@angular/core';
+
+import { PROJECTS, CATEGORIES, Category } from '../../../shared/data/site-data';
+import { Project } from '../../../shared/interfaces/project.model';
+import { FormsModule } from '@angular/forms'; // 1. استيراد الموديول
+import { AppService } from '../../../core/services/app.service';
+@Component({
+  selector: 'app-portfolio',
+  templateUrl: './portfolio.component.html',
+  styleUrls: ['./portfolio.component.css'],
+})
+export class PortfolioComponent {
+  categories = CATEGORIES;
+  selectedCategory: Category = 'All';
+  query = '';
+
+  constructor(public site: AppService) {}
+
+  get filtered(): Project[] {
+    const q = this.query.toLowerCase();
+    return PROJECTS.filter(
+      (p) =>
+        (this.selectedCategory === 'All' || p.category === this.selectedCategory) &&
+        (q === '' || `${p.title} ${p.client}`.toLowerCase().includes(q))
+    );
+  }
+
+  setCategory(c: Category): void {
+    this.selectedCategory = c;
+  }
+}
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+import { AppService } from './app.service';
+import { PaginatedProjects, Project, ApiResponse } from '../../shared/interfaces/project.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProjectService {
+  private baseUrl = 'Projects';
+
+  constructor(private appService: AppService) {}
+
+  // دالة مسؤولة عن جلب الـ Token وإرفاقه في الهيدر يدوياً
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token') || localStorage.getItem('accessToken') || '';
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
+  getAllProjects(
+    page: number = 1,
+    pageSize: number = 10,
+    search?: string,
+    categoryId?: number,
+    isPublished?: boolean,
+    isFeatured?: boolean,
+    sortBy?: string,
+    desc?: boolean
+  ): Observable<PaginatedProjects> {
+    let query = `${this.baseUrl}/Get-All?Page=${page}&PageSize=${pageSize}`;
+
+    if (search) query += `&Search=${encodeURIComponent(search)}`;
+    if (categoryId) query += `&CategoryId=${categoryId}`;
+    if (isPublished !== undefined) query += `&IsPublished=${isPublished}`;
+    if (isFeatured !== undefined) query += `&IsFeatured=${isFeatured}`;
+    if (sortBy) query += `&SortBy=${sortBy}`;
+    if (desc !== undefined) query += `&Desc=${desc}`;
+
+    return this.appService.get<ApiResponse<PaginatedProjects>>(query).pipe(
+      map(response => response.data)
+    );
+  }
+
+  getProjectById(id: number): Observable<Project> {
+    return this.appService.get<ApiResponse<Project>>(`${this.baseUrl}/Get-By-Id/${id}`).pipe(
+      map(response => response.data)
+    );
+  }
+
+  createProject(formData: FormData): Observable<any> {
+    return this.appService.post<any>(`${this.baseUrl}/Add`, formData, { headers: this.getAuthHeaders() });
+  }
+
+  updateProject(id: number, formData: FormData): Observable<any> {
+    return this.appService.put<any>(`${this.baseUrl}/Update/${id}`, formData, { headers: this.getAuthHeaders() });
+  }
+
+  deleteProject(id: number): Observable<any> {
+    return this.appService.delete<any>(`${this.baseUrl}/Delete/${id}`, { headers: this.getAuthHeaders() });
+  }
+
+  uploadGallery(id: number, formData: FormData): Observable<any> {
+    return this.appService.post<any>(`${this.baseUrl}/Upload-Gallery/${id}`, formData, { headers: this.getAuthHeaders() });
+  }
+
+  changeCover(id: number, formData: FormData): Observable<any> {
+    return this.appService.put<any>(`${this.baseUrl}/Change-Cover/${id}`, formData, { headers: this.getAuthHeaders() });
+  }
+
+  deleteGalleryImage(imageId: number): Observable<any> {
+    return this.appService.delete<any>(`${this.baseUrl}/Delete-Gallery-Image/${imageId}`, { headers: this.getAuthHeaders() });
+  }
+}
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { AppService } from './app.service';
+import { Category, CategoryPayload } from '../../shared/interfaces/category.model';
+import { ApiResponse } from './auth.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CategoryService {
+  private readonly baseUrl = 'Categories';
+
+  constructor(private appService: AppService) {}
+
+  getAllCategories(): Observable<Category[]> {
+    return this.appService.get<ApiResponse<Category[]>>(`${this.baseUrl}/Get-All`).pipe(
+      map(response => response.data)
+    );
+  }
+
+  createCategory(payload: CategoryPayload): Observable<ApiResponse<Category>> {
+    return this.appService.post<ApiResponse<Category>>(`${this.baseUrl}/Add`, payload);
+  }
+
+  updateCategory(id: number, payload: CategoryPayload): Observable<ApiResponse<Category>> {
+    return this.appService.put<ApiResponse<Category>>(`${this.baseUrl}/Update/${id}`, { id, ...payload });
+  }
+
+  deleteCategory(id: number): Observable<ApiResponse<boolean>> {
+    return this.appService.delete<ApiResponse<boolean>>(`${this.baseUrl}/Delete/${id}`);
+  }
+}

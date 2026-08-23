@@ -1,0 +1,74 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-white">إدارة الخدمات (Services Management)</h2>
+    <button (click)="openCreateModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition">
+      + إضافة خدمة جديدة
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-10 text-gray-400">جاري تحميل البيانات...</div>
+
+  <!-- Table -->
+  <div *ngIf="!isLoading" class="bg-gray-800 rounded-lg shadow overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-gray-700 text-gray-300 text-sm uppercase">
+          <th class="p-3">العنوان (EN)</th>
+          <th class="p-3">العنوان (AR)</th>
+          <th class="p-3">الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-700 text-gray-200">
+        <tr *ngFor="let s of services" class="hover:bg-gray-750">
+          <td class="p-3">{{ s.titleEn }}</td>
+          <td class="p-3">{{ s.titleAr }}</td>
+          <td class="p-3 flex gap-2">
+            <button (click)="openEditModal(s)" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm text-white">تعديل</button>
+            <button (click)="deleteService(s.id)" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm text-white">حذف</button>
+          </td>
+        </tr>
+        <tr *ngIf="services.length === 0">
+          <td colspan="3" class="text-center p-4 text-gray-400">لا توجد خدمات مضافة حتى الآن.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal Form -->
+  <div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+    <div class="bg-gray-800 rounded-lg max-w-lg w-full p-6 text-white">
+      <h3 class="text-xl font-bold mb-4">{{ isEditMode ? 'تعديل الخدمة' : 'إضافة خدمة جديدة' }}</h3>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">Title (EN)</label>
+          <input type="text" [(ngModel)]="formData.titleEn" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white">
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">العنوان (AR)</label>
+          <input type="text" [(ngModel)]="formData.titleAr" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white">
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">Description (EN)</label>
+          <textarea [(ngModel)]="formData.descriptionEn" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" rows="2"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">الوصف (AR)</label>
+          <textarea [(ngModel)]="formData.descriptionAr" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" rows="2"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-400 mb-1">صورة الخدمة (Image)</label>
+          <input type="file" (change)="onFileSelected($event)" class="w-full text-gray-300">
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-6">
+        <button (click)="closeModal()" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded text-white">إلغاء</button>
+        <button (click)="saveService()" [disabled]="isSaving" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white font-semibold">
+          {{ isSaving ? 'جاري الحفظ...' : 'حفظ' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

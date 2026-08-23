@@ -1,0 +1,90 @@
+<!-- Hero Section -->
+<section class="relative overflow-hidden border-b border-zinc-200 bg-zinc-900 pb-24 pt-36 text-white transition-colors duration-300 dark:border-white/10 md:pb-32 md:pt-52">
+
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+
+    <img
+      src="assets/Newfolder/services.jpeg"
+      alt="Services Background"
+      class="h-full w-full object-cover object-center opacity-35"
+    />
+
+    <!-- Overlay -->
+    <div
+      class="absolute inset-0 bg-gradient-to-r
+      from-black/90
+      via-black/20
+      to-black/10">
+    </div>
+
+  </div>
+
+  <!-- Content -->
+  <div class="container-x relative z-10">
+
+    <div class="mb-6 flex items-center gap-3">
+      <span class="h-0.5 w-8 bg-brand"></span>
+      <span class="font-mono text-xs font-semibold uppercase tracking-widest text-brand">
+        {{ site.t('Our Services', 'خدماتنا') }}
+      </span>
+    </div>
+
+    <h1 class="max-w-5xl text-4xl font-bold leading-tight text-white md:text-7xl lg:text-8xl">
+      {{ site.t('Creative Solutions & Production Services', 'الحلول الإبداعية وخدمات الإنتاج') }}
+      <span class="text-brand">.</span>
+    </h1>
+
+    <p class="mt-8 max-w-3xl text-base md:text-xl leading-relaxed text-zinc-300">
+      {{
+        site.t(
+          'From creative concepts and branding to production, exhibitions, printing, events, and activations — Star Media delivers complete end-to-end advertising solutions.',
+          'من الأفكار الإبداعية والهوية البصرية إلى الإنتاج، المعارض، الطباعة، الفعاليات، وحملات التفعيل — تقدم ستار ميديا حلولاً إعلانية متكاملة بأعلى مستويات الجودة والدقة.'
+        )
+      }}
+    </p>
+
+  </div>
+
+</section>
+<!-- Services Grid -->
+<section class="bg-white py-20 transition-colors duration-300 dark:bg-zinc-950 md:py-32">
+  <div class="container-x space-y-8">
+
+    <a
+      *ngFor="let s of services; let i = index"
+      [routerLink]="['/services', s.slug]"
+      class="group grid cursor-pointer overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 transition-all duration-300 hover:border-brand dark:border-white/10 dark:bg-zinc-900/60 md:grid-cols-[1.2fr_1fr]"
+      [ngClass]="i % 2 ? 'md:[&>*:first-child]:order-2' : ''">
+
+      <div class="relative aspect-[16/10] overflow-hidden md:aspect-auto">
+        <img
+          [src]="s.img"
+[alt]="site.lang() === 'ar' ? s.ar : s.en"
+          loading="lazy"
+          class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+      </div>
+
+      <div class="flex flex-col justify-center gap-6 p-8 md:p-12 lg:p-16">
+        <span class="font-mono text-xs font-bold text-brand">
+          0{{ i + 1 }} / 08
+        </span>
+
+        <h2 class="text-2xl font-bold text-zinc-900 transition-colors group-hover:text-brand dark:text-white md:text-4xl lg:text-5xl">
+  {{ site.lang() === 'ar' ? s.ar : s.en }}
+        </h2>
+
+        <p class="text-sm md:text-base text-zinc-600 dark:text-zinc-400">
+{{ site.lang() === 'ar' ? s.desc_ar : s.desc_en }}
+        </p>
+
+        <div>
+          <span class="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-brand transition-all group-hover:underline">
+            {{ site.t('View Service Details', 'عرض تفاصيل الخدمة') }} →
+          </span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>

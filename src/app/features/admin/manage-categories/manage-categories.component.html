@@ -1,0 +1,129 @@
+<div [attr.dir]="site.currentLang() === 'ar' ? 'rtl' : 'ltr'" class="space-y-6">
+
+  <!-- Header Title & Action -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#12151a] p-6 rounded-2xl border border-slate-800">
+    <div>
+      <h1 class="text-2xl font-bold text-white">
+        {{ site.t('Categories Management', 'إدارة الأقسام') }}
+      </h1>
+      <p class="text-xs text-slate-400 mt-1">
+        {{ site.t('Manage categories for Star Media portfolio items', 'إضافة وتعديل الأقسام الرئيسية للمشاريع') }}
+      </p>
+    </div>
+
+    <button (click)="openAddModal()"
+            class="px-5 py-2.5 rounded-xl font-bold text-sm text-black bg-[#22c55e] hover:bg-[#16a34a] transition duration-200 shadow-lg shadow-[#22c55e]/10 flex items-center gap-2">
+      <span class="text-base font-bold">+</span>
+      <span>{{ site.t('Add New Category', 'إضافة قسم جديد') }}</span>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-16 gap-3">
+    <div class="w-8 h-8 border-4 border-[#22c55e] border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-xs text-slate-400 uppercase tracking-wider">
+      {{ site.t('Loading categories...', 'جاري تحميل الأقسام...') }}
+    </p>
+  </div>
+
+  <!-- Categories Table -->
+  <div *ngIf="!loading" class="bg-[#12151a] rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-slate-300 ltr:text-left rtl:text-right">
+        <thead class="bg-[#0a0c0f] text-slate-400 uppercase text-xs font-semibold tracking-wider border-b border-slate-800">
+          <tr>
+            <th class="p-4">#</th>
+            <th class="p-4">{{ site.t('Category Name (AR)', 'اسم القسم (عربي)') }}</th>
+            <th class="p-4">{{ site.t('Category Name (EN)', 'اسم القسم (إنجليزي)') }}</th>
+            <th class="p-4 text-center">{{ site.t('Actions', 'الإجراءات') }}</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800/60">
+          <tr *ngFor="let cat of categories; let i = index" class="hover:bg-slate-800/30 transition">
+            <td class="p-4 font-mono text-slate-500">{{ cat.id }}</td>
+            <td class="p-4 font-semibold text-white">{{ getCategoryName(cat, 'AR') }}</td>
+            <td class="p-4 font-semibold text-white">{{ getCategoryName(cat, 'EN') }}</td>
+            <td class="p-4 text-center space-x-2 rtl:space-x-reverse">
+              <button (click)="openEditModal(cat)"
+                      class="px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500 hover:text-white transition text-xs font-semibold">
+                {{ site.t('Edit', 'تعديل') }}
+              </button>
+             <button
+  type="button"
+  (click)="deleteCategory(cat.id)"
+  class="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500 hover:text-white transition text-xs font-semibold">
+
+  {{ site.t('Delete','حذف') }}
+
+</button>
+            </td>
+          </tr>
+
+          <tr *ngIf="categories.length === 0">
+            <td colspan="4" class="p-8 text-center text-slate-500 text-sm">
+              {{ site.t('No categories found.', 'لا توجد أقسام مضافة حالياً.') }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Category Modal (Add / Edit) -->
+  <div *ngIf="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+    <div class="bg-[#12151a] border border-slate-800 w-full max-w-lg rounded-2xl shadow-2xl p-6 relative overflow-hidden space-y-5">
+
+      <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+        <h3 class="text-lg font-bold text-white">
+          {{ isEditMode ? site.t('Edit Category', 'تعديل قسم') : site.t('Add New Category', 'إضافة قسم جديد') }}
+        </h3>
+        <button (click)="closeModal()" class="text-slate-400 hover:text-white font-bold text-xl">&times;</button>
+      </div>
+
+      <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()" class="space-y-4">
+           <div>
+          <label class="block text-xs text-slate-300 mb-1.5 font-semibold">
+            {{ site.t('Category Name (English)', 'اسم القسم (بالإنجليزية)') }}
+          </label>
+          <input type="text" formControlName="nameEn"
+                 class="w-full p-3 rounded-xl bg-[#0a0c0f] border text-white text-sm focus:ring-1 focus:outline-none transition"
+                 [ngClass]="categoryForm.get('nameEn')?.invalid && categoryForm.get('nameEn')?.touched
+                   ? 'border-red-500/60 focus:border-red-500 focus:ring-red-500'
+                   : 'border-slate-800 focus:border-[#22c55e] focus:ring-[#22c55e]'" />
+          <p *ngIf="categoryForm.get('nameEn')?.invalid && categoryForm.get('nameEn')?.touched"
+             class="text-red-400 text-xs mt-1.5">
+            {{ site.t('English name is required (min 2 characters)', 'اسم القسم بالإنجليزية مطلوب (حرفين على الأقل)') }}
+          </p>
+        </div>
+        <div>
+          <label class="block text-xs text-slate-300 mb-1.5 font-semibold">
+            {{ site.t('Category Name (Arabic)', 'اسم القسم (بالعربي)') }}
+          </label>
+          <input type="text" formControlName="nameAr"
+                 class="w-full p-3 rounded-xl bg-[#0a0c0f] border text-white text-sm focus:ring-1 focus:outline-none transition"
+                 [ngClass]="categoryForm.get('nameAr')?.invalid && categoryForm.get('nameAr')?.touched
+                   ? 'border-red-500/60 focus:border-red-500 focus:ring-red-500'
+                   : 'border-slate-800 focus:border-[#22c55e] focus:ring-[#22c55e]'" />
+          <p *ngIf="categoryForm.get('nameAr')?.invalid && categoryForm.get('nameAr')?.touched"
+             class="text-red-400 text-xs mt-1.5">
+            {{ site.t('Arabic name is required (min 2 characters)', 'اسم القسم بالعربي مطلوب (حرفين على الأقل)') }}
+          </p>
+        </div>
+
+
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <button type="button" (click)="closeModal()"
+                  class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-bold transition">
+            {{ site.t('Cancel', 'إلغاء') }}
+          </button>
+          <button type="submit" [disabled]="isSaving"
+                  class="px-5 py-2 rounded-xl bg-[#22c55e] text-black hover:bg-[#16a34a] text-xs font-bold transition disabled:opacity-50">
+            {{ isSaving ? site.t('Saving...', 'جاري الحفظ...') : site.t('Save Category', 'حفظ البيانات') }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

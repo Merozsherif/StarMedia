@@ -1,0 +1,99 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light mode tokens (h s l) — edit these to match your real brand palette */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 8%;
+  --surface: 0 0% 97%;
+  --surface-2: 0 0% 94%;
+  --border: 0 0% 88%;
+  --muted-foreground: 0 0% 45%;
+  --brand: 22 100% 55%;         /* orange accent — swap to your real brand color */
+  --brand-foreground: 0 0% 100%;
+}
+
+.dark {
+  --background: 0 0% 5%;
+  --foreground: 0 0% 96%;
+  --surface: 0 0% 8%;
+  --surface-2: 0 0% 12%;
+  --border: 0 0% 18%;
+  --muted-foreground: 0 0% 60%;
+  --brand: 22 100% 55%;
+  --brand-foreground: 0 0% 8%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+[dir="rtl"] body {
+  font-family: "Cairo", sans-serif;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1400px] px-6 md:px-10;
+  }
+
+  .text-display {
+    @apply font-display font-semibold tracking-tight;
+  }
+
+  .text-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.25em] text-brand;
+  }
+
+  .btn-brand {
+    @apply inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground transition-transform hover:scale-[1.03];
+  }
+
+  .btn-ghost-brand {
+    @apply inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-brand hover:text-brand;
+  }
+
+  /* Subtle noise texture overlay used on the hero (.grain) */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+}
+
+/* Fallback scrollbar styling (optional) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 999px;
+}

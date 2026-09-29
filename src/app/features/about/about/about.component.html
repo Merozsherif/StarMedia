@@ -1,27 +1,24 @@
-<!-- Hero / Header Section -->
 <!-- Hero / Header Section with Background Image -->
-<section class="relative overflow-hidden border-b border-zinc-200 bg-zinc-900 pb-24 pt-36 text-white transition-colors duration-300 dark:border-white/10 md:pb-32 md:pt-48">
-
+<section
+  [attr.dir]="site.lang() === 'ar' ? 'rtl' : 'ltr'"
+  class="relative overflow-hidden border-b border-zinc-200 bg-zinc-900 pb-24 pt-36 text-white transition-colors duration-300 dark:border-white/10 md:pb-32 md:pt-48"
+>
   <!-- صورة الخلفية والطبقة المعتمة (Overlay) -->
   <div class="absolute inset-0 z-0">
-    <!-- حط مسار صورتك هنا في الـ src أو الـ style -->
     <img
-    src="assets/Newfolder/about2.jpeg"
+      src="assets/Newfolder/about2.jpeg"
       alt="About Us Background"
       class="h-full w-full object-cover object-center opacity-30"
+      (error)="$any($event.target).src = 'assets/default-bg.jpg'"
     />
-    <!-- تدرج لوني أو لون عتمة عشان الكتابة تبان بوضوح فوق الصورة -->
-    <!-- <div class="absolute inset-0 bg-gradient-to-r
-     from-black/90 via-black/80 to-black/60 dark:from-black/95 dark:via-black/85 dark:to-black/75"></div> -->
-
-     <div class="absolute inset-0 bg-gradient-to-r
-from-black/90
-via-black/20
-to-black/10">
-</div>
+    <div class="absolute inset-0 bg-gradient-to-r
+      from-black/90
+      via-black/20
+      to-black/10">
+    </div>
   </div>
 
-  <!-- المحتوى الرئيسي (مرفوع فوق الخلفية بـ relative z-10) -->
+  <!-- المحتوى الرئيسي -->
   <div class="container-x relative z-10">
     <div class="text-eyebrow mb-6 flex items-center gap-3">
       <span class="h-0.5 w-8 bg-brand"></span>
@@ -51,9 +48,11 @@ to-black/10">
 </section>
 
 <!-- Our Story / Overview Section -->
-<section class="bg-white py-20 transition-colors duration-300 dark:bg-zinc-950 md:py-32">
+<section
+  [attr.dir]="site.lang() === 'ar' ? 'rtl' : 'ltr'"
+  class="bg-white py-20 transition-colors duration-300 dark:bg-zinc-950 md:py-32"
+>
   <div class="container-x grid gap-12 lg:grid-cols-12 lg:items-center">
-
     <!-- Left Content -->
     <div class="lg:col-span-7 space-y-6">
       <div class="text-eyebrow flex items-center gap-2">
@@ -131,13 +130,15 @@ to-black/10">
         </div>
       </div>
     </div>
-
   </div>
 </section>
-<!-- Equipment & Capabilities -->
-<section class="border-t border-border/40 bg-surface py-24 md:py-32">
-  <div class="container-x">
 
+<!-- Equipment & Capabilities -->
+<section
+  [attr.dir]="site.lang() === 'ar' ? 'rtl' : 'ltr'"
+  class="border-t border-border/40 bg-surface py-24 md:py-32"
+>
+  <div class="container-x">
     <!-- Header -->
     <div class="mb-16 max-w-3xl">
       <div class="text-eyebrow mb-4 flex items-center gap-3">
@@ -156,7 +157,7 @@ to-black/10">
     </div>
 
     <!-- Equipment Grid -->
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div *ngIf="equipment && equipment.length" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       <div
         *ngFor="let e of equipment; let i = index"
         class="group relative flex flex-col overflow-hidden rounded-xl border border-border/40 bg-background transition-all duration-500 hover:-translate-y-2 hover:border-brand/60 hover:shadow-2xl hover:shadow-brand/10"
@@ -172,8 +173,8 @@ to-black/10">
           />
           <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent"></div>
 
-          <!-- Number Badge -->
-          <div class="absolute top-4 left-4 rounded-md bg-background/60 backdrop-blur-md px-3 py-1 font-mono text-xs font-bold text-brand border border-border/40">
+          <!-- Number Badge – تم تغيير left-4 إلى start-4 -->
+          <div class="absolute top-4 start-4 rounded-md bg-background/60 backdrop-blur-md px-3 py-1 font-mono text-xs font-bold text-brand border border-border/40">
             0{{ i + 1 }}
           </div>
         </div>
@@ -189,6 +190,8 @@ to-black/10">
         </div>
       </div>
     </div>
-
+    <p *ngIf="!equipment || equipment.length === 0" class="py-12 text-center text-muted-foreground">
+      {{ site.t('No equipment data available.', 'لا توجد بيانات عن المعدات.') }}
+    </p>
   </div>
 </section>

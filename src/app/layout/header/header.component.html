@@ -5,23 +5,23 @@
     : 'bg-background'"
 >
 
-  <div class="container-x flex h-20 items-center justify-between gap-4">
+  <div class="container-x flex h-24 items-center justify-between gap-4">
 
     <!-- Logo -->
     <a routerLink="/" class="flex shrink-0 items-center gap-2">
       <img
-       [src]="site.theme() === 'dark' ? 'assets/whitegreen.png' : 'assets/blackgreen.png'"
+        [src]="site.theme() === 'dark' ? 'assets/whitegreen.png' : 'assets/blackgreen.png'"
         alt="Star Media"
-        class="h-10 w-auto transition-opacity duration-300"
+        class="h-14 w-auto transition-opacity duration-300"
       >
     </a>
 
     <!-- Desktop Menu Links -->
-    <nav class="hidden items-center gap-1 lg:flex">
+    <nav class="hidden items-center gap-2 lg:flex">
       <a
         *ngFor="let item of nav"
         [routerLink]="item.to"
-        class="relative px-4 py-2 text-sm font-medium tracking-wide transition-colors"
+        class="relative px-5 py-2.5 text-base font-medium tracking-wide transition-colors"
         [ngClass]="isActive(item.to)
         ? 'text-brand font-semibold'
         : 'text-foreground/80 hover:text-foreground'"
@@ -30,42 +30,42 @@
 
         <span
           *ngIf="isActive(item.to)"
-          class="absolute inset-x-4 bottom-1 h-0.5 bg-brand rounded-full">
+          class="absolute inset-x-5 bottom-1 h-0.5 bg-brand rounded-full">
         </span>
       </a>
     </nav>
 
     <!-- Right Actions -->
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-3">
 
-      <!-- Language -->
+      <!-- Language Toggle -->
       <button
         (click)="site.toggleLang()"
-        class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border/60 px-3 py-2 text-xs font-semibold uppercase tracking-widest text-foreground transition-colors hover:border-brand hover:text-brand"
+        class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border/60 px-4 py-2.5 text-sm font-semibold uppercase tracking-widest text-foreground transition-colors hover:border-brand hover:text-brand"
       >
-   {{ site.lang() === 'en' ? 'AR' : 'EN' }}
+        {{ site.lang() === 'en' ? 'AR' : 'EN' }}
       </button>
 
-      <!-- Theme -->
+      <!-- Theme Toggle -->
       <button
         (click)="site.toggleTheme()"
-        class="grid h-9 w-9 place-items-center rounded-full border border-border/60 text-foreground transition-colors hover:border-brand hover:text-brand"
+        class="grid h-11 w-11 place-items-center rounded-full border border-border/60 text-lg text-foreground transition-colors hover:border-brand hover:text-brand"
       >
-{{ site.theme() === 'dark' ? '☀' : '🌙' }}
+        {{ site.theme() === 'dark' ? '☀' : '🌙' }}
       </button>
 
-      <!-- CTA -->
+      <!-- CTA (Desktop) -->
       <a
         routerLink="/contact"
-        class="hidden xl:inline-flex btn-brand ml-2"
+        class="hidden xl:inline-flex btn-brand ml-2 px-6 py-3 text-base"
       >
         {{ site.t('Start Your Project', 'ابدأ مشروعك') }}
       </a>
 
-      <!-- Mobile Button -->
+      <!-- Mobile Menu Button -->
       <button
         (click)="toggleMenu()"
-        class="grid h-9 w-9 place-items-center rounded-full border border-border/60 text-foreground lg:hidden"
+        class="grid h-11 w-11 place-items-center rounded-full border border-border/60 text-lg text-foreground lg:hidden"
       >
         {{ open ? '✕' : '☰' }}
       </button>
@@ -84,16 +84,17 @@
         *ngFor="let item of nav"
         [routerLink]="item.to"
         (click)="toggleMenu()"
-        class="border-b border-border/40 py-4 text-base font-medium last:border-none"
+        class="border-b border-border/40 py-5 text-lg font-medium last:border-none"
         [ngClass]="isActive(item.to) ? 'text-brand font-semibold' : 'text-foreground/80'"
       >
         {{ site.t(item.en, item.ar) }}
       </a>
 
+      <!-- CTA (Mobile) -->
       <a
         routerLink="/contact"
         (click)="toggleMenu()"
-        class="btn-brand mt-4 justify-center xl:hidden"
+        class="btn-brand mt-4 justify-center py-3 text-base xl:hidden"
       >
         {{ site.t('Start Your Project', 'ابدأ مشروعك') }}
       </a>

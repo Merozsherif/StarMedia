@@ -1,3 +1,5 @@
+<div [attr.dir]="site.lang() === 'ar' ? 'rtl' : 'ltr'">
+
 <!-- Hero Section -->
 <section class="relative isolate flex min-h-[100svh] w-full items-end overflow-hidden bg-black text-white">
   <!-- Hero Background Image -->
@@ -28,20 +30,20 @@
 
     <!-- Main Title -->
     <h1 class="max-w-5xl text-[clamp(2.5rem,7vw,6.5rem)] font-bold tracking-tight text-white leading-[1.1] animate-fade-up" style="animation-delay: 0.1s">
-      {{ site.t('We build brands', 'نبني علاماتٍ') }}
+      {{ site.t('We build brands', 'نبني علامات تجارية') }}
       <br />
       <span class="italic font-light text-zinc-300">{{ site.t('from ', 'من ') }}</span>
-      <span class="text-brand">{{ site.t('vision', 'الرؤية') }}</span>
+      <span class="text-brand">{{ site.t('vision', 'الفكرة') }}</span>
       <span class="italic font-light text-zinc-300">{{ site.t(' to ', ' إلى ') }}</span>
-      <span class="text-white">{{ site.t('reality.', 'الواقع.') }}</span>
+      <span class="text-white">{{ site.t('reality.', 'أرض الواقع.') }}</span>
     </h1>
 
     <!-- Description & CTAs -->
     <div class="mt-10 flex flex-col items-start gap-8 lg:flex-row lg:items-end lg:justify-between">
       <p class="max-w-2xl text-base md:text-lg leading-relaxed text-zinc-300 animate-fade-up" style="animation-delay: 0.25s">
         {{ site.t(
-          'Star Media is a full-service creative & production house — exhibitions, booths, printing, branding, signage, events and activations executed end-to-end from our own facility.',
-          'ستار ميديا بيت متكامل للإبداع والإنتاج — معارض، أجنحة، طباعة، هوية، لافتات، فعاليات وتفعيل، ننفذها بالكامل داخل مصنعنا.'
+          'We design, build and print everything in-house — booths, exhibitions, signage, branding and events — from the first sketch to the final install.',
+          'نقوم بتصميم وتنفيذ وطباعة كل ما تحتاجه علامتك التجارية داخل منشأتنا الخاصة — الأجنحة والمعارض واللافتات والهوية البصرية والفعاليات — بدءًا من الفكرة الأولى وحتى التركيب النهائي.'
         ) }}
       </p>
 
@@ -55,12 +57,6 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- Scroll Down Indicator -->
-  <div class="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-3 text-xs uppercase tracking-widest text-zinc-400 md:flex">
-    <span class="h-8 w-px bg-white/20"></span>
-    <span>{{ site.t('Scroll', 'مرّر') }}</span>
   </div>
 </section>
 
@@ -78,7 +74,6 @@
   </div>
 </section>
 
-<!-- Services Preview -->
 <!-- Services Section -->
 <section class="relative w-full border-t border-border/40 bg-background py-24 md:py-32">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -90,10 +85,10 @@
           {{ site.t('Our Services', 'خدماتنا') }}
         </span>
         <h2 class="text-display text-4xl font-bold tracking-tight text-foreground md:text-6xl">
-          {{ site.t('Complete Production.', 'إنتاج متكامل.') }}
+          {{ site.t('One Team.', 'فريق واحد.') }}
           <br />
           <span class="italic font-light text-brand">
-            {{ site.t('From Idea To Reality.', 'من الفكرة إلى التنفيذ.') }}
+            {{ site.t('Every Step Covered.', 'يغطي كل مراحل العمل.') }}
           </span>
         </h2>
       </div>
@@ -122,7 +117,7 @@
           <div class="absolute inset-0 bg-gradient-to-t from-surface/70 via-surface/10 to-transparent"></div>
 
           <!-- Number Badge -->
-          <div class="absolute top-4 left-4 rounded-md bg-background/60 backdrop-blur-md px-3 py-1 font-mono text-xs font-bold text-brand border border-border/40">
+          <div class="absolute top-4 start-4 rounded-md bg-background/60 backdrop-blur-md px-3 py-1 font-mono text-xs font-bold text-brand border border-border/40">
             0{{ i + 1 }}
           </div>
         </div>
@@ -153,7 +148,7 @@
           <!-- Explore Label -->
           <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand transition-all group-hover:gap-4">
             <span>{{ site.t('Explore Service', 'استكشف الخدمة') }}</span>
-            <span class="text-base">→</span>
+            <span class="text-base rtl:rotate-180">→</span>
           </span>
         </div>
       </a>
@@ -176,10 +171,10 @@
           </span>
         </div>
         <h2 class="text-display text-4xl font-bold tracking-tight text-foreground md:text-6xl">
-          {{ site.t('Machinery That Powers', 'مكنة تشغّل') }}
+          {{ site.t('The Machines', 'الماكينات') }}
           <br />
           <span class="italic font-light text-brand">
-            {{ site.t('Every Detail.', 'كل التفاصيل.') }}
+            {{ site.t('Behind the Work.', 'التي تقف خلف كل التفاصيل.') }}
           </span>
         </h2>
       </div>
@@ -226,24 +221,58 @@
       <div class="max-w-3xl">
         <div class="text-eyebrow mb-4">{{ site.t('Featured Work', 'أعمال مختارة') }}</div>
         <h2 class="text-display text-4xl md:text-6xl">
-          {{ site.t('Recent projects', 'مشاريع حديثة') }}
+          {{ site.t('A few projects', 'مجموعة من مشاريعنا') }}
           <br />
-          <span class="italic font-light text-muted-foreground">{{ site.t("we're proud of.", 'نفتخر بها.') }}</span>
+          <span class="italic font-light text-muted-foreground">{{ site.t("we're proud of.", 'التي نفخر بها.') }}</span>
         </h2>
       </div>
       <a routerLink="/portfolio" class="btn-ghost-brand self-start md:self-end">{{ site.t('View All', 'شاهد الكل') }}</a>
     </div>
 
     <!-- الفلاتر — حقيقية من الـ API، نفس التابات المستخدمة في صفحة Portfolio -->
-    <div class="mb-10 flex flex-wrap gap-2">
-      <button
-        *ngFor="let c of categories"
-        (click)="setCategory(c)"
-        class="rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-all"
-        [ngClass]="selectedCategory.id === c.id ? 'border-brand bg-brand text-brand-foreground' : 'border-border/60 text-muted-foreground hover:border-brand hover:text-brand'"
-      >
-        {{ getCategoryDisplayName(c.id) }}
-      </button>
+    <div class="mb-10 flex flex-col gap-4 md:flex-row md:items-center">
+
+      <!-- Desktop: Pills -->
+      <div class="hidden md:flex flex-wrap gap-2">
+        <button
+          *ngFor="let c of categories"
+          (click)="setCategory(c)"
+          class="rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-all"
+          [ngClass]="selectedCategory.id === c.id ? 'border-brand bg-brand text-brand-foreground' : 'border-border/60 text-muted-foreground hover:border-brand hover:text-brand'"
+        >
+          {{ getCategoryDisplayName(c.id) }}
+        </button>
+      </div>
+
+      <!-- Mobile: Dropdown -->
+      <div class="relative md:hidden">
+        <button
+          (click)="filterOpen = !filterOpen"
+          class="flex w-full items-center justify-between gap-2 rounded-lg border border-border/60 bg-surface px-4 py-3 text-sm font-semibold text-foreground"
+        >
+          <span class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-brand"></span>
+            {{ getCategoryDisplayName(selectedCategory.id) }}
+          </span>
+          <span class="text-muted-foreground transition-transform duration-200" [ngClass]="filterOpen ? 'rotate-180' : ''">▼</span>
+        </button>
+
+        <div
+          *ngIf="filterOpen"
+          class="absolute inset-x-0 top-full z-40 mt-2 overflow-hidden rounded-lg border border-border/60 bg-surface shadow-lg"
+        >
+          <button
+            *ngFor="let c of categories"
+            (click)="setCategory(c); filterOpen = false"
+            class="flex w-full items-center gap-3 border-b border-border/30 px-4 py-3 text-start text-sm last:border-none transition-colors"
+            [ngClass]="selectedCategory.id === c.id ? 'bg-brand/10 text-brand font-semibold' : 'text-foreground/80 hover:bg-border/10'"
+          >
+            <span class="h-1.5 w-1.5 rounded-full" [ngClass]="selectedCategory.id === c.id ? 'bg-brand' : 'bg-transparent'"></span>
+            {{ getCategoryDisplayName(c.id) }}
+          </button>
+        </div>
+      </div>
+
     </div>
 
     <!-- Loading state -->
@@ -306,14 +335,14 @@
     <div class="flex flex-col justify-center bg-black p-8 py-20 text-white md:p-16 lg:p-24">
       <div class="text-eyebrow mb-4">{{ site.t('Inside the studio', 'داخل الاستوديو') }}</div>
       <h2 class="text-display text-4xl md:text-6xl">
-        {{ site.t('A production floor', 'أرضية إنتاج') }}
+        {{ site.t('No shortcuts,', 'بلا اختصارات،') }}
         <br />
-        <span class="text-brand italic font-light">{{ site.t('without compromise.', 'بلا تنازل.') }}</span>
+        <span class="text-brand italic font-light">{{ site.t('just good work.', 'بل عمل متقن فقط.') }}</span>
       </h2>
       <p class="mt-8 max-w-lg text-white/70">
         {{ site.t(
-          'Wide-format UV printing, CNC and laser fabrication, welding, carpentry, paint, LED, and a dedicated finishing bay — 4,200 m² of in-house capability under one roof.',
-          'طباعة يو في، تصنيع CNC وليزر، لحام ونجارة ودهان و LED — 4,200 م² من القدرات الداخلية تحت سقف واحد.'
+          'UV printing, CNC and laser cutting, welding, carpentry, paint and LED work — all in one 4,200 m² facility we run ourselves.',
+          'طباعة UV، القص بتقنية CNC والليزر، اللحام والنجارة والدهان وأعمال إضاءة LED — كل ذلك ضمن منشأة واحدة مساحتها 4,200 متر مربع، نديرها بأنفسنا.'
         ) }}
       </p>
       <div class="mt-10">
@@ -327,7 +356,7 @@
 <section class="border-y border-border/40 bg-background py-20 overflow-hidden">
   <div class="container-x mb-12 text-center">
     <div class="text-eyebrow mb-3">{{ site.t('Trusted by leading brands', 'بثقة أهم العلامات') }}</div>
-    <h2 class="text-display text-3xl md:text-4xl">{{ site.t('Global brands. Local craft.', 'علامات عالمية. حرفية محلية.') }}</h2>
+    <h2 class="text-display text-3xl md:text-4xl">{{ site.t('Brands we work with.', 'العلامات التي نتعامل معها.') }}</h2>
   </div>
 
   <!-- الشريط الأول: يتحرك شمال -->
@@ -355,7 +384,6 @@
   </div>
 
 </section>
-
 <!-- FAQ -->
 <section class="py-28 md:py-40">
   <div class="container-x grid gap-16 lg:grid-cols-[1fr_1.4fr]">
@@ -364,10 +392,10 @@
       <h2 class="text-display text-4xl md:text-5xl">
         {{ site.t('Questions,', 'أسئلة،') }}
         <br />
-        <span class="italic font-light text-muted-foreground">{{ site.t('answered.', 'أُجيب عنها.') }}</span>
+        <span class="italic font-light text-muted-foreground">{{ site.t('answered.', 'وإجابات.') }}</span>
       </h2>
       <p class="mt-6 max-w-md text-muted-foreground">
-        {{ site.t("Can't find what you're looking for? Reach out and we'll walk you through the process.", 'لم تجد ما تبحث عنه؟ تواصل معنا وسنشرح لك المسار.') }}
+        {{ site.t("Didn't find what you need? Reach out and we'll walk you through it.", 'لم تجد ما تبحث عنه؟ تواصل معنا وسنوضح لك التفاصيل.') }}
       </p>
     </div>
     <div class="divide-y divide-border/60 border-y border-border/60">
@@ -391,9 +419,9 @@
     <div class="p-8 py-20 md:p-16 lg:p-24">
       <div class="text-eyebrow mb-4">{{ site.t('Visit us', 'زُر الاستوديو') }}</div>
       <h2 class="text-display text-4xl md:text-6xl text-zinc-900 dark:text-white">
-        {{ site.t('Come see', 'تعال') }}
+        {{ site.t('Come by', 'تفضل بزيارتنا') }}
         <br />
-        <span class="text-brand italic font-light">{{ site.t("where it's made.", 'لترى مكان الصنع.') }}</span>
+        <span class="text-brand italic font-light">{{ site.t('and see it yourself.', 'وشاهد مكان التنفيذ بنفسك.') }}</span>
       </h2>
 
       <ul class="mt-10 space-y-6 text-base md:text-lg">
@@ -454,3 +482,5 @@
     </div>
   </div>
 </section>
+
+</div>

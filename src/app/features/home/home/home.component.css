@@ -50,6 +50,10 @@
   width: max-content;
   animation: marquee-reverse 40s linear infinite;
 }
+.animate-marquee,
+.animate-marquee-reverse {
+  direction: ltr;
+}
 
 .animate-marquee:hover,
 .animate-marquee-reverse:hover {
@@ -69,6 +73,8 @@
     min-height: 0;
   }
 }
+
+
 section a[routerLink="/about"]::-webkit-scrollbar {
   display: none;
 }
@@ -79,4 +85,21 @@ section a[routerLink="/about"]::-webkit-scrollbar {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 25s linear infinite;
 }

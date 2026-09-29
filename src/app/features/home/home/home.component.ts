@@ -36,73 +36,61 @@ export class HomeComponent implements OnInit {
   stats = STATS;
   clientsMarquee = [...CLIENTS, ...CLIENTS];
 
-  // Animated counter values — one per entry in `stats`, in the same order.
-  // Rendered directly in the template ({{ statValues[i] }}) instead of a
-  // separate <app-counter> component, so there is nothing extra to wire up.
   statValues: number[] = [];
-
+  filterOpen = false;
   serviceGroups = COMPANY_DETAILS.serviceGroups;
 
   faqs: Faq[] = [
-
     {
       q_en: 'What services does Star Media offer?',
       q_ar: 'ما الخدمات التي تقدمها ستار ميديا؟',
       a_en: 'Star Media provides complete creative and production solutions, including exhibitions, booth fabrication, indoor and outdoor printing, branding, signage, events, activations, vehicle branding, custom stands and promotional materials.',
       a_ar: 'تقدم ستار ميديا حلولًا متكاملة في الإبداع والإنتاج، تشمل المعارض، تصنيع الأجنحة، الطباعة الداخلية والخارجية، البراندنج، اللافتات، الفعاليات، التفعيلات، براندنج السيارات، الستاندات المخصصة والمواد الدعائية.'
     },
-
     {
       q_en: 'Do you handle projects from concept to execution?',
       q_ar: 'هل تنفذون المشروع من الفكرة حتى التنفيذ؟',
       a_en: 'Yes. We manage the entire process from creative concept and design to production, fabrication, printing, installation and final on-ground execution.',
       a_ar: 'نعم. ندير المشروع بالكامل بداية من الفكرة والتصميم، مرورًا بالإنتاج والتصنيع والطباعة، وحتى التركيب والتنفيذ النهائي على أرض الواقع.'
     },
-
     {
       q_en: 'Where is Star Media located?',
       q_ar: 'أين يقع مقر ستار ميديا؟',
       a_en: 'Star Media is based in Cairo, Egypt, with a fully equipped creative and production operation serving clients across different industries.',
       a_ar: 'يقع مقر ستار ميديا في القاهرة، مصر، مع منظومة متكاملة للإبداع والإنتاج تخدم عملاء من مختلف المجالات.'
     },
-
     {
       q_en: 'Do you work outside Cairo?',
       q_ar: 'هل تعملون خارج القاهرة؟',
       a_en: 'Yes. We execute projects across Cairo and travel to different governorates across Egypt for production, installation, events, activations and on-ground projects.',
       a_ar: 'نعم. ننفذ مشاريع داخل القاهرة ونسافر إلى مختلف محافظات مصر لتنفيذ أعمال الإنتاج والتركيب والفعاليات والتفعيلات والمشاريع على أرض الواقع.'
     },
-
     {
       q_en: 'Can Star Media build custom booths and exhibition stands?',
       q_ar: 'هل يمكن لستار ميديا تنفيذ أجنحة وستاندات مخصصة؟',
       a_en: 'Absolutely. We design and fabricate custom booths, exhibition stands and brand experiences tailored to your space, objectives and brand identity.',
       a_ar: 'بالتأكيد. نصمم وننفذ أجنحة وستاندات وتجارب براند مخصصة تتناسب مع المساحة والأهداف وهوية علامتك التجارية.'
     },
-
     {
       q_en: 'Do you provide printing and installation services?',
       q_ar: 'هل تقدمون خدمات الطباعة والتركيب؟',
       a_en: 'Yes. We provide indoor and outdoor printing, large-format graphics, vinyl applications, signage and professional installation as part of our complete production solutions.',
       a_ar: 'نعم. نقدم خدمات الطباعة الداخلية والخارجية، المطبوعات كبيرة الحجم، تطبيقات الفينيل، اللافتات والتركيب الاحترافي ضمن حلولنا الإنتاجية المتكاملة.'
     },
-
     {
       q_en: 'Do you handle vehicle branding and wrapping?',
       q_ar: 'هل تقدمون خدمات براندنج وتغليف السيارات؟',
       a_en: 'Yes. We provide full and partial vehicle branding, fleet wraps and custom graphics, from design and printing to professional installation.',
       a_ar: 'نعم. نقدم خدمات براندنج السيارات، التغليف الكامل أو الجزئي، وبراندنج الأساطيل، بداية من التصميم والطباعة وحتى التركيب الاحترافي.'
     },
-
     {
       q_en: 'Can I visit your production facility?',
       q_ar: 'هل يمكنني زيارة مقر أو منشأة الإنتاج؟',
       a_en: 'Yes. You can contact us to arrange a visit, discuss your project and meet the team behind the creative and production process.',
       a_ar: 'نعم. يمكنك التواصل معنا لترتيب زيارة، مناقشة مشروعك والتعرف على الفريق المسؤول عن مراحل الإبداع والإنتاج.'
-    },
-
+    }
   ];
-  // 🔗 Featured Projects — حقيقية من الـ API (نفس منطق portfolio.component.ts)
+
   categories: Category[] = [ALL_CATEGORY];
   selectedCategory: Category = ALL_CATEGORY;
   featuredProjects: any[] = [];
@@ -116,10 +104,10 @@ export class HomeComponent implements OnInit {
     private projectService: ProjectService,
     private categoryService: CategoryService
   ) {}
+
   equipment = COMPANY_DETAILS.capabilities.equipment;
 
   ngOnInit(): void {
-    // Start every stat at 0, then count each one up to its target value.
     this.statValues = this.stats.map(() => 0);
     this.stats.forEach((s, i) => this.animateStat(i, Number(s.value)));
 
@@ -146,7 +134,7 @@ export class HomeComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe({
       next: (res: any) => {
         const categoriesList = res.data || res;
-        const currentLang = 'EN'; // 🔒 اسم إنجليزي "افتراضي" يتخزن جوه c.name، والعرض الفعلي بيتحدد لايف من getCategoryDisplayName()
+        const currentLang = 'EN';
 
         const allCategory: any = {
           id: 0,
@@ -162,7 +150,6 @@ export class HomeComponent implements OnInit {
             (t: any) => t.languageCode?.toUpperCase() === currentLang
           );
 
-          // 🔗 بنجرب كل الاحتمالات المعروفة لاسم الحقل الإنجليزي، لحد ما نتأكد من الشكل الفعلي للـ API
           const resolvedName =
             c.nameEn ||
             c.name_en ||
@@ -174,7 +161,7 @@ export class HomeComponent implements OnInit {
             '';
 
           return {
-            ...c,        // ✅ بيحافظ على c.translations[] الأصلية
+            ...c,
             name: resolvedName
           };
         });
@@ -196,7 +183,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // ✅ الاسم المعروض فعليًا للمستخدم — بيتحسب لايف كل مرة الـ template بيناديها
   getCategoryDisplayName(categoryId: number | null | undefined): string {
     if (categoryId === undefined || categoryId === null || categoryId === 0) {
       return this.site.t('All', 'الكل');
@@ -205,7 +191,8 @@ export class HomeComponent implements OnInit {
     const match = this.categories.find((c: any) => c.id === categoryId) as any;
     if (!match) return '';
 
-    const lang = (this.site.currentLang() || 'en').toUpperCase();
+    // إصلاح اسم الدالة إلى site.lang() الآمنة
+    const lang = (this.site.lang ? this.site.lang() : 'en').toUpperCase();
     if (lang === 'EN') return match.name;
 
     return (
@@ -247,7 +234,7 @@ export class HomeComponent implements OnInit {
               title: p.title || p.clientName || 'Project #' + p.id,
               image: imageUrl || 'assets/images/default-placeholder.png',
               client: p.clientName || '',
-              categoryId: p.categoryId ?? null,   // ✅ بنخزن الـ id بس، والاسم بيتحسب لايف في الـ template
+              categoryId: p.categoryId ?? null,
               year: p.year || ''
             };
           });
